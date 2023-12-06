@@ -3,7 +3,8 @@ let time = startingSeconds;
 const timer = document.getElementById("timer");
 const shuffleButton = document.getElementById("shuffle");
 const upperCard = document.querySelector(".card");
-const defaultCard = document.querySelector("#default_card")
+const defaultCard = document.querySelector("#default_card");
+const SliderContainer = document.querySelector(".slider-container");
 let countdownInterval;
 
 const slider = document.getElementById("slider");
@@ -18,7 +19,6 @@ function startCountDown() {
 
 function stopCountDown() {
   clearInterval(countdownInterval);
-
 }
 
 function changeCountDown() {
@@ -31,6 +31,7 @@ function changeCountDown() {
   if (time === 0) {
     setTimerStyle("red", "00", "00");
     stopCountDown();
+    location.reload();
   }
 
   time--;
@@ -49,6 +50,8 @@ shuffleButton.addEventListener("click", () => {
   startCountDown(); // Start the countdown
   //Reduce the height of the default card
   defaultCard.style.width = "100px";
+  defaultCard.classList.add("shaking-image")
+  SliderContainer.classList.remove("hidden");
 });
 
 //Silder
