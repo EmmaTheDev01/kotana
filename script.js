@@ -113,7 +113,7 @@ function shuffleArray(array) {
 // Function to display a card
 function displayCard(cardData, allCards) {
   // Update image source
-  defaultCard.src = cardData.image;
+
 
   // Update description and hint
   const descriptionElement = document.querySelector(".description-heading");
