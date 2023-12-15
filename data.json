@@ -1,0 +1,304 @@
+{
+  "cards": [
+    {
+      "id": 1,
+      "image": "/kotana/cards/0.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 2,
+      "image": "/kotana/cards/2.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 3,
+      "image": "/kotana/cards/3.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 4,
+      "image": "/kotana/cards/4.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 5,
+      "image": "/kotana/cards/5.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 6,
+      "image": "/kotana/cards/6.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 7,
+      "image": "/kotana/cards/7.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 8,
+      "image": "/kotana/cards/8.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 9,
+      "image": "/kotana/cards/9.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 10,
+      "image": "/kotana/cards/10.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 11,
+      "image": "/kotana/cards/11.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 12,
+      "image": "/kotana/cards/12.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 13,
+      "image": "/kotana/cards/13.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 14,
+      "image": "/kotana/cards/14.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 15,
+      "image": "/kotana/cards/15.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 16,
+      "image": "/kotana/cards/16.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 17,
+      "image": "/kotana/cards/17.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 18,
+      "image": "/kotana/cards/18.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 19,
+      "image": "/kotana/cards/19.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 20,
+      "image": "/kotana/cards/20.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 21,
+      "image": "/kotana/cards/21.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 22,
+      "image": "/kotana/cards/22.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 23,
+      "image": "/kotana/cards/23.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 24,
+      "image": "/kotana/cards/24.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 25,
+      "image": "/kotana/cards/25.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 26,
+      "image": "/kotana/cards/26.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 27,
+      "image": "/kotana/cards/27.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 28,
+      "image": "/kotana/cards/28.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 29,
+      "image": "/kotana/cards/29.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 30,
+      "image": "/kotana/cards/30.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 31,
+      "image": "/kotana/cards/31.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 32,
+      "image": "/kotana/cards/32.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 33,
+      "image": "/kotana/cards/33.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 34,
+      "image": "/kotana/cards/34.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 35,
+      "image": "/kotana/cards/35.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 36,
+      "image": "/kotana/cards/36.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 37,
+      "image": "/kotana/cards/37.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 38,
+      "image": "/kotana/cards/38.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 39,
+      "image": "/kotana/cards/39.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 40,
+      "image": "/kotana/cards/40.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 41,
+      "image": "/kotana/cards/41.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 42,
+      "image": "/kotana/cards/42.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 43,
+      "image": "/kotana/cards/43.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 44,
+      "image": "/kotana/cards/44.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 45,
+      "image": "/kotana/cards/45.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 46,
+      "image": "/kotana/cards/46.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 47,
+      "image": "/kotana/cards/47.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 48,
+      "image": "/kotana/cards/48.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    },
+    {
+      "id": 49,
+      "image": "/kotana/cards/49.png",
+      "description": "Description 1",
+      "hint": "Sexual Reproduction"
+    },
+    {
+      "id": 50,
+      "image": "/kotana/cards/50.png",
+      "description": "Description 2",
+      "hint": "Hint 2"
+    }
+  ]
+}
