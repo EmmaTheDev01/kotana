@@ -63,7 +63,7 @@ shuffleButton.addEventListener("click", () => {
 // Slider
 
 function showSlide(index) {
-  const newPosition = -index * 35 + "%"; // 25% because there are 4 cards per page
+  const newPosition = -index * 60 + "%"; // 25% because there are 4 cards per page
   slider.style.transform = "translateX(" + newPosition + ")";
 }
 
@@ -114,7 +114,6 @@ function shuffleArray(array) {
 function displayCard(cardData, allCards) {
   // Update image source
 
-
   // Update description and hint
   const descriptionElement = document.querySelector(".description-heading");
   const hintElement = document.querySelector(".hint-heading");
@@ -126,14 +125,21 @@ function displayCard(cardData, allCards) {
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
 }
-
 // Function to display images in the slider
-function displaySlider(images) {
+function displaySlider(images, currentIndex) {
   // Clear existing slider content
   slider.innerHTML = "";
 
+  // Create a container for the default card
+  const defaultCardContainer = document.createElement("div");
+  defaultCardContainer.classList.add("slide");
+  defaultCardContainer.appendChild(defaultCard.cloneNode(true));
+
+  // Add the default card container to the slider
+  slider.appendChild(defaultCardContainer);
+
   // Add images to the slider
-  images.forEach((imageData) => {
+  images.forEach((imageData, index) => {
     const slide = document.createElement("div");
     slide.classList.add("slide");
     const img = document.createElement("img");
@@ -150,6 +156,6 @@ function displaySlider(images) {
   });
 
   // Reset slider position
-  currentIndex = 0;
   showSlide(currentIndex);
+  shuffleButton.style.display = "none";
 }

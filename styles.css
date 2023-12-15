@@ -70,12 +70,14 @@ nav ul li {
   animation: shake 0.9s ease-in-out;
 }
 .description {
-  padding: 1rem;
+  padding: .5rem;
   margin-left: auto;
   margin-right: auto;
+  height: auto;
 }
 .description h3 {
   display: block;
+  font-size: 1.1rem;
 }
 .shufflebtn {
   display: flex;
@@ -100,22 +102,29 @@ nav ul li {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
   width: 90%;
   height: 200px;
-  overflow: hidden;
   position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+.slider-box{
+  width: 100%;
+  overflow: hidden;
 }
 
 #slider {
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: transform 1s ease-in-out;
-  width: 10%;
+  transition: transform .2s ease-in-out;
+  width: 25%;
   margin-left: auto;
   margin-right: auto;
+}
+
+#slider:active {
+  cursor: grabbing; /* Change cursor to grabbing on active state */
 }
 
 .slide {
@@ -149,10 +158,10 @@ nav ul li {
 }
 
 #prev {
-  left: 10px;
+  left: -30px;
 }
 #next {
-  right: 10px;
+  right: -35px;
 }
 
 .hidden {
