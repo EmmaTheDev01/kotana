@@ -1,73 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
-    <title>Kotana Game</title>
-  </head>
-  <body>
-    <div class="game">
-      <nav class="navbar">
-        <ul>
-          <li id="user">User</li>
-          <li id="score">Score: <span class="score_number">0</span></li>
-          <li id="timer">00:20</li>
-        </ul>
-      </nav>
-      <div class="card">
-        <img src="/kotana/cards/1.png" id="default_card" alt="Card Image" />
-      </div>
-      <div class="description">
-        <h3 class="description-heading">Description:</h3>
-        <h3 class="hint-heading">Hint:</h3>
-      </div>
-      <div class="shuffle-btn">
-        <button id="shuffle">Shuffle</button>
-      </div>
 
-      <div class="slider-container hidden">
-        <div class="slider-box">
-          <div id="slider">
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="swiper-bundle.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Kotana Game</title>
+</head>
+
+<body>
+  <div class="game">
+    <nav class="navbar">
+      <ul>
+        <li id="user">User</li>
+        <li id="score">Score: <span class="score_number">0</span></li>
+        <li id="timer">00:20</li>
+      </ul>
+    </nav>
+    <div class="default-card">
+      <img src="/cards/1.png" id="default_card" alt="" />
+    </div>
+    <div class="description">
+      <h3 class="description-heading">Description:</h3>
+      <h3 class="hint-heading">Hint:</h3>
+    </div>
+    <div class="shuffle-btn">
+      <button id="shuffle">Shuffle</button>
+    </div>
+
+    <div class="slide-container swiper hidden">
+      <div class="slide-content">
+        <div class="card-wrapper swiper-wrapper">
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+          </div>
+
+
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+          </div>
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+          </div>
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+          </div>
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
-            </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
-            </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
-            </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
-            </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
-            </div>
-            <div class="slide">
-              <img src="/kotana/cards/1.png" alt="Card Image" />
+          </div>
+
+          <div class="card swiper-slide">
+            <div class="card-image">
+              <img src="/cards/1.png" class="card-img" alt="card image" />
             </div>
           </div>
         </div>
-        <button id="prev">&lt; Prev</button>
-        <button id="next">Next &gt;</button>
       </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
     </div>
+    <script src="swiper-bundle.min.js"></script>
     <script src="script.js"></script>
-  </body>
+</body>
+
 </html>

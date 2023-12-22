@@ -1,13 +1,44 @@
+
+//SLIDER
+var swiper = new Swiper(".slide-content", {
+  slidesPerView: 5,
+  centeredSlides: true, 
+  spaceBetween: 20, 
+  loop: true,
+  loopAllGroupWithBlank: true,
+  grabCursor: true,
+
+  pagination: {
+    el: ".swiper-pagination",
+    clickable: true,
+    dynamicBullets: true,
+  },
+  navigation: {
+    nextEl: ".swiper-button-next",
+    prevEl: ".swiper-button-prev",
+  },
+  breakpoints: {
+    0: {
+      slidesPerView: 1,
+    },
+    540: {
+      slidesPerView: 2,
+    },
+    950: {
+      slidesPerView: 5,
+    },
+  }
+});
 const startingSeconds = 20;
 let time = localStorage.getItem("savedTime") || startingSeconds;
 const timer = document.getElementById("timer");
 const shuffleButton = document.getElementById("shuffle");
 const upperCard = document.querySelector(".card");
 const defaultCard = document.querySelector("#default_card");
-const SliderContainer = document.querySelector(".slider-container");
+const SliderContainer = document.querySelector(".slide-container");
 let countdownInterval;
 
-const slider = document.getElementById("slider");
+const slider = document.querySelector(".slide-content");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
 
@@ -60,28 +91,6 @@ shuffleButton.addEventListener("click", () => {
   fetchDataAndDisplay();
 });
 
-// Slider
-
-function showSlide(index) {
-  const newPosition = -index * 60 + "%"; // 25% because there are 4 cards per page
-  slider.style.transform = "translateX(" + newPosition + ")";
-}
-
-function showNextSlide() {
-  currentIndex = (currentIndex + 2) % (slider.children.length - 3);
-  showSlide(currentIndex);
-}
-
-function showPrevSlide() {
-  currentIndex =
-    (currentIndex - 4 + slider.children.length) % (slider.children.length - 3);
-  showSlide(currentIndex);
-}
-
-prevButton.addEventListener("click", showPrevSlide);
-nextButton.addEventListener("click", showNextSlide);
-
-// New code for slider and shuffle
 
 // Function to fetch data from JSON file and display
 async function fetchDataAndDisplay() {
@@ -112,8 +121,6 @@ function shuffleArray(array) {
 
 // Function to display a card
 function displayCard(cardData, allCards) {
-  // Update image source
-
   // Update description and hint
   const descriptionElement = document.querySelector(".description-heading");
   const hintElement = document.querySelector(".hint-heading");
@@ -124,29 +131,28 @@ function displayCard(cardData, allCards) {
   // Display images in the slider with the same hint
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
-}
-// Function to display images in the slider
-function displaySlider(images, currentIndex) {
-  // Clear existing slider content
-  slider.innerHTML = "";
-
-  // Create a container for the default card
-  const defaultCardContainer = document.createElement("div");
-  defaultCardContainer.classList.add("slide");
-  defaultCardContainer.appendChild(defaultCard.cloneNode(true));
-
-  // Add the default card container to the slider
-  slider.appendChild(defaultCardContainer);
+}function displaySlider(images) {
+  // Clear existing slides using Swiper API
+  swiper.removeAllSlides();
 
   // Add images to the slider
-  images.forEach((imageData, index) => {
+  images.forEach((imageData) => {
     const slide = document.createElement("div");
-    slide.classList.add("slide");
+    slide.classList.add("swiper-slide", "card");
+
+    const cardImage = document.createElement("div");
+    cardImage.classList.add("card-image");
+
     const img = document.createElement("img");
     img.src = imageData.image;
+    img.classList.add('card-img');
     img.alt = `card ${imageData.description}`;
-    slide.appendChild(img);
-    slider.appendChild(slide);
+    slider.style.overflow="hidden";
+    cardImage.appendChild(img);
+    slide.appendChild(cardImage);
+
+    // Add the slide to the Swiper instance
+    swiper.appendSlide(slide);
 
     // Log image data to console
     console.log("Image Source:", imageData.image);
@@ -155,7 +161,7 @@ function displaySlider(images, currentIndex) {
     console.log("----------------------");
   });
 
-  // Reset slider position
-  showSlide(currentIndex);
+  // Update the Swiper instance
+  swiper.update();
   shuffleButton.style.display = "none";
 }

@@ -2,295 +2,295 @@
   "cards": [
     {
       "id": 1,
-      "image": "/kotana/cards/0.png",
+      "image": "/cards/0.png",
       "description": "Skewer: Meat especially grilled, that is most of the time hooked to the stick.",
       "hint": "Entertainment"
     },
     {
       "id": 2,
-      "image": "/kotana/cards/2.png",
+      "image": "/cards/2.png",
       "description": " Menstruation, or period, is normal vaginal bleeding that occurs as part of a woman's monthly cycle. Every month, your body prepares for pregnancy. If no pregnancy occurs, the uterus, or womb, sheds its lining. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 3,
-      "image": "/kotana/cards/3.png",
+      "image": "/cards/3.png",
       "description": "Pads are worn by women to absorb menstrual discharge, thereby protecting clothing and furnishings.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 4,
-      "image": "/kotana/cards/4.png",
+      "image": "/cards/4.png",
       "description": "The organ in the lower body of a woman or female mammal where offspring are conceived and in which they gestate before birth; the womb.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 5,
-      "image": "/kotana/cards/5.png",
+      "image": "/cards/5.png",
       "description": "A menstrual cup is a menstrual hygiene device which is inserted into the vagina during menstruation. Its purpose is to collect menstrual fluid (blood from the uterine lining mixed with other fluids). Menstrual cups are usually made of flexible medical grade silicone, latex, or a thermoplastic isomer.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 6,
-      "image": "/kotana/cards/6.png",
+      "image": "/cards/6.png",
       "description": "cloth pads that can be used several times. They absorbs the menstrual blood and the pad should stay for about 4-5 hours depending on your menstrual flow.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 7,
-      "image": "/kotana/cards/7.png",
+      "image": "/cards/7.png",
       "description": "A plug of soft material inserted into the vagina to absorb menstrual blood.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 8,
-      "image": "/kotana/cards/8.png",
+      "image": "/cards/8.png",
       "description": "A fluid or mucus that keeps the vagina clean and moist, and protects it from infection.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 9,
-      "image": "/kotana/cards/9.png",
+      "image": "/cards/9.png",
       "description": " 28 to 29 days of a woman or female mammal's life. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 10,
-      "image": "/kotana/cards/10.png",
+      "image": "/cards/10.png",
       "description": " Emergency contraception can be used to reduce the risk of pregnancy. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 11,
-      "image": "/kotana/cards/11.png",
+      "image": "/cards/11.png",
       "description": "A point in time 12 months after a woman's last period.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 12,
-      "image": "/kotana/cards/12.png",
+      "image": "/cards/12.png",
       "description": "A sheath-shaped barrier device used during sexual intercourse to reduce the probability of pregnancy or a sexually transmitted infection. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 13,
-      "image": "/kotana/cards/13.png",
+      "image": "/cards/13.png",
       "description": "A chronic, potentially life-threatening condition caused by the human immunodeficiency virus (HIV).",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 14,
-      "image": "/kotana/cards/14.png",
+      "image": "/cards/14.png",
       "description": " The Menstruation Station in Kigali ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 15,
-      "image": "/kotana/cards/15.png",
+      "image": "/cards/15.png",
       "description": "Kigali Menstruation station anniversary.",
-      "hint": "Women empowerment"
+      "hint": "Sexual Reproductive health"
     },
     {
       "id": 16,
-      "image": "/kotana/cards/16.png",
+      "image": "/cards/16.png",
       "description": "Provides a safe haven for any girl who has an unexpected period or any girl with menstrual problems. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 17,
-      "image": "/kotana/cards/17.png",
+      "image": "/cards/17.png",
       "description": "A nonsteroidal anti-inflammatory drug that is used to relieve pain, fever, and inflammation. This includes painful menstrual periods, migraines, and rheumatoid arthritis. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 18,
-      "image": "/kotana/cards/18.png",
+      "image": "/cards/18.png",
       "description": "A free, holistic referral center for survivors of gender-based violence (GBV) in Rwanda.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 19,
-      "image": "/kotana/cards/19.png",
+      "image": "/cards/19.png",
       "description": "The muscular tube leading from the external genitals to the cervix of the uterus in women and most female mammals.",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 20,
-      "image": "/kotana/cards/20.png",
+      "image": "/cards/20.png",
       "description": "A sudden or intense change in a person's emotional state. There are various causes of mood swings in both males and females, including mental health and physical conditions. ",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 21,
-      "image": "/kotana/cards/21.png",
+      "image": "/cards/21.png",
       "description": "A small, T-shaped contraceptive device that's inserted into the uterus to prevent pregnancy.1",
       "hint": "Sexual Reproductive health"
     },
     {
       "id": 22,
-      "image": "/kotana/cards/22.png",
+      "image": "/cards/22.png",
       "description": "A woman who started poetry in Rwanda.",
       "hint": "Women empowerment"
     },
     {
       "id": 23,
-      "image": "/kotana/cards/23.png",
+      "image": "/cards/23.png",
       "description": "An American inventor most noted for her development of the adjustable sanitary belt, although racial discrimination caused her patent for the sanitary belt to be prevented for thirty years.",
       "hint": "Women empowerment"
     },
     {
       "id": 24,
-      "image": "/kotana/cards/24.png",
+      "image": "/cards/24.png",
       "description": " Central Government institution mandated to ensure strategic coordination of the implementation of national policies, strategies and programs regarding the promotion of the family, gender and children's rights' protection",
       "hint": "Women empowerment"
     },
     {
       "id": 25,
-      "image": "/kotana/cards/25.png",
+      "image": "/cards/25.png",
       "description": "An American politician and attorney who is the 49th and incumbent vice president of the United States under President Joe Biden.",
       "hint": "Women empowerment"
     },
     {
       "id": 26,
-      "image": "/kotana/cards/26.png",
+      "image": "/cards/26.png",
       "description": "The fourth and current Secretary General of Organisation internationale de la Francophonie. She previously served as the Minister of Foreign Affairs and Cooperation of Rwanda from 2009 to 2018. She also served as Government Spokesperson.",
       "hint": "Women empowerment"
     },
     {
       "id": 27,
-      "image": "/kotana/cards/27.png",
+      "image": "/cards/27.png",
       "description": "Musical artist who played a big role in Rwanda's independence and she sang many songs of victory, reconcilliation and peace.",
       "hint": "Women empowerment"
     },
     {
       "id": 28,
-      "image": "/kotana/cards/28.png",
+      "image": "/cards/28.png",
       "description": "Empowering young Rwandan youth mentally, socially and economically to fight teenage pregnancies and menstrual stigma. We do this through empowering adolescents with sexual reproductive health and rights information , Menstrual hygiene management and creation of income generating activities.",
       "hint": "Women empowerment"
     },
     {
       "id": 29,
-      "image": "/kotana/cards/29.png",
+      "image": "/cards/29.png",
       "description": "A Nigerian writer whose works include novels, short stories and nonfiction.",
       "hint": "Women empowerment"
     },
     {
       "id": 30,
-      "image": "/kotana/cards/30.png",
+      "image": "/cards/30.png",
       "description": "An international football referee from Rwanda who is a listed international referee for FIFA since 2012. She was an official at the 2019 FIFA Women's World Cup in France.",
       "hint": "Women empowerment"
     },
     {
       "id": 31,
-      "image": "/kotana/cards/31.png",
+      "image": "/cards/31.png",
       "description": "nternational Women's Day (IWD). It's a global holiday that celebrates women's achievements and calls for action to accelerate gender equality. The day also serves as a focal point for the women's rights",
       "hint": "Women empowerment"
     },
     {
       "id": 32,
-      "image": "/kotana/cards/32.png",
+      "image": "/cards/32.png",
       "description": "A woman who has borne offspring; a female parent",
       "hint": "Women empowerment"
     },
     {
       "id": 33,
-      "image": "/kotana/cards/33.png",
+      "image": "/cards/33.png",
       "description": "Board game that is invented to teach women about sexual reproduction. It is also invented for fun, men can play it too.",
       "hint": "Women empowerment"
     },
     {
       "id": 34,
-      "image": "/kotana/cards/34.png",
+      "image": "/cards/34.png",
       "description": "A solidarity movement for the advancement of gender equality, initiated by the United Nations.",
       "hint": "Women empowerment"
     },
     {
       "id": 35,
-      "image": "/kotana/cards/35.png",
+      "image": "/cards/35.png",
       "description": "She felt she could do something even when no girl or woman was supposed to replace their father in Itorero, Muvunanyambo said, in reference to the group of men who were specially trained to “serve the nation”.",
       "hint": "Women empowerment"
     },
     {
       "id": 36,
-      "image": "/kotana/cards/36.png",
+      "image": "/cards/36.png",
       "description": "Board game that is invented to teach women about sexual reproduction. It is also invented for fun, men can play it too.",
       "hint": "Entertainment"
     },
     {
       "id": 37,
-      "image": "/kotana/cards/37.png",
+      "image": "/cards/37.png",
       "description": "A free social networking site that allows users to share short posts, called tweets, with their followers and others.",
       "hint": "Entertainment"
     },
     {
       "id": 38,
-      "image": "/kotana/cards/38.png",
+      "image": "/cards/38.png",
       "description": "An informal term for people who use Twitter, or who choose to receive messages from a particular person or company on Twitter. ",
       "hint": "Entertainment"
     },
     {
       "id": 39,
-      "image": "/kotana/cards/39.png",
+      "image": "/cards/39.png",
       "description": "One of the African Great Lakes. It lies on the border between the Democratic Republic of the Congo and Rwanda, and is in the Albertine Rift, the western branch of the East African Rift.",
       "hint": "Entertainment"
     },
     {
       "id": 40,
-      "image": "/kotana/cards/40.png",
+      "image": "/cards/40.png",
       "description": "An extinct stratovolcano in the Virunga Mountains on the border between Rwanda and the Democratic Republic of Congo.",
       "hint": "Entertainment"
     },
     {
       "id": 41,
-      "image": "/kotana/cards/41.png",
+      "image": "/cards/41.png",
       "description": "A summit that occurs every two years. The meeting brings together delegations from 54 Commonwealth nations. ",
       "hint": "Entertainment"
     },
     {
       "id": 42,
-      "image": "/kotana/cards/42.png",
+      "image": "/cards/42.png",
       "description": " was an American singer, songwriter, dancer, and philanthropist. Known as the King of Pop, he is regarded as one of the most significant cultural figures of the 20th century.",
       "hint": "Entertainment"
     },
     {
       "id": 43,
-      "image": "/kotana/cards/43.png",
+      "image": "/cards/43.png",
       "description": "A woody flowering plant in the genus Rosa, which is part of the Rosaceae family. ",
       "hint": "Entertainment"
     },
     {
       "id": 44,
-      "image": "/kotana/cards/44.png",
+      "image": "/cards/44.png",
       "description": "Also known as cleats or soccer shoes, are a type of shoe worn by players of association football (soccer). Football boots are designed with studs on the outsole to help with grip on grass pitches.",
       "hint": "Entertainment"
     },
     {
       "id": 45,
-      "image": "/kotana/cards/45.png",
+      "image": "/cards/45.png",
       "description": "A building for sports and entertainment that has a large central area surrounded by seats",
       "hint": "Entertainment"
     },
     {
       "id": 46,
-      "image": "/kotana/cards/46.png",
+      "image": "/cards/46.png",
       "description": "A current medium of exchange in the form of coins and banknotes; coins and banknotes collectively.",
       "hint": "Entertainment"
     },
     {
       "id": 47,
-      "image": "/kotana/cards/47.png",
+      "image": "/cards/47.png",
       "description": "Tom, a house cat, embarks on his adventure of persistently pursuing his never-ending quest of laying his hands on the notorious mouse Jerry.",
       "hint": "Entertainment"
     },
     {
       "id": 48,
-      "image": "/kotana/cards/48.png",
+      "image": "/cards/48.png",
       "description": "The art of arranging sound to create some combination of form, harmony, melody, rhythm, or otherwise expressive content.",
       "hint": "Entertainment"
     },
     {
       "id": 49,
-      "image": "/kotana/cards/49.png",
+      "image": "/cards/49.png",
       "description": "a partnership between Rwanda and Arsenal Football Club to promote tourism in Rwanda. The campaign's slogan is Discover the Land of a Thousand Hills.",
       "hint": "Entertainment"
     }
