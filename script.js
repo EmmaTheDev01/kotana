@@ -2,8 +2,8 @@
 //SLIDER
 var swiper = new Swiper(".slide-content", {
   slidesPerView: 5,
-  centeredSlides: true, 
-  spaceBetween: 20, 
+  centeredSlides: true,
+  spaceBetween: 20,
   loop: true,
   loopAllGroupWithBlank: true,
   grabCursor: true,
@@ -75,6 +75,15 @@ function setTimerStyle(color, minutes = "", seconds = "") {
   timer.style.color = color;
   timer.innerHTML = `${minutes} : ${seconds}`;
 }
+//Set default card
+function setDefaultCard(clickedImage) {
+  defaultCard.classList.remove("shaking-image");
+  defaultCard.style.width = clickedImage.width + "px";
+  defaultCard.innerHTML = clickedImage.outerHTML;
+  SliderContainer.classList.add("hidden");
+ 
+}
+
 
 // Event listener for the shuffle button
 shuffleButton.addEventListener("click", () => {
@@ -131,7 +140,7 @@ function displayCard(cardData, allCards) {
   // Display images in the slider with the same hint
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
-}function displaySlider(images) {
+} function displaySlider(images) {
   // Clear existing slides using Swiper API
   swiper.removeAllSlides();
 
@@ -147,7 +156,8 @@ function displayCard(cardData, allCards) {
     img.src = imageData.image;
     img.classList.add('card-img');
     img.alt = `card ${imageData.description}`;
-    slider.style.overflow="hidden";
+    img.style.cursor = "pointer";
+    slider.style.overflow = "hidden";
     cardImage.appendChild(img);
     slide.appendChild(cardImage);
 
@@ -159,9 +169,36 @@ function displayCard(cardData, allCards) {
     console.log("Description:", imageData.description);
     console.log("Hint:", imageData.hint);
     console.log("----------------------");
+    let score = 0;
+    const score_text = document.querySelector('#score')
+    // Add an event listener to the slider container
+    img.addEventListener("click", (event) => {
+      // Check if the clicked element is an image
+      if (event.target.tagName === "IMG") {
+        // Get the clicked image's alt attribute
+        const clickedAlt = event.target.alt;
+
+        // Get the current card's description
+        const currentCard = document.querySelector(".description-heading").textContent.split(":")[1].trim();
+
+        // Check if the clicked image's alt is equal to the current card's description
+        if (clickedAlt === `card ${currentCard}`) {
+          // Increment the score
+          score++;
+          score_text.textContent = score;
+          console.log("Score:", score);
+        }
+      }
+      SliderContainer.classList.add("hidden");
+      setDefaultCard();
+      shuffleButton.style.display = "block";
+      stopCountDown();
+    });
   });
 
   // Update the Swiper instance
   swiper.update();
-  shuffleButton.style.display = "none";
+  const randomNumber = Math.floor(Math.random() * 7);
+  swiper.slideTo(randomNumber);
 }
+
