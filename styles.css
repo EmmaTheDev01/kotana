@@ -50,6 +50,10 @@ nav ul li {
   padding: 1px 16px;
   color: #fff;
 }
+#user{
+  font-size: 1.3rem;
+  margin-right: 1rem;
+}
 #timer {
   font-size: 1.3rem;
   font-weight: 700;
@@ -77,6 +81,9 @@ nav ul li {
   margin-left: auto;
   margin-right: auto;
   height: auto;
+}
+.description-heading{
+ font-size: 1rem;
 }
 .description h3 {
   display: block;
