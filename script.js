@@ -42,6 +42,11 @@ const slider = document.querySelector(".slide-content");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
 
+//Score declaration
+let score = localStorage.getItem("score") || 0;
+const scoreText = document.querySelector('#score');
+scoreText.textContent = score;
+
 let currentIndex = 0;
 
 function startCountDown() {
@@ -76,12 +81,16 @@ function setTimerStyle(color, minutes = "", seconds = "") {
   timer.innerHTML = `${minutes} : ${seconds}`;
 }
 //Set default card
-function setDefaultCard(clickedImage) {
+function setDefaultCard(clickedImageIndex) {
   defaultCard.classList.remove("shaking-image");
-  defaultCard.style.width = clickedImage.width + "px";
+
+  // Get the clicked image element using Swiper API
+  const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
+
   defaultCard.innerHTML = clickedImage.outerHTML;
   SliderContainer.classList.add("hidden");
- 
+  stopCountDown();
+  shuffleButton.style.display = "block";
 }
 
 
@@ -140,7 +149,9 @@ function displayCard(cardData, allCards) {
   // Display images in the slider with the same hint
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
-} function displaySlider(images) {
+}
+
+function displaySlider(images) {
   // Clear existing slides using Swiper API
   swiper.removeAllSlides();
 
@@ -169,8 +180,8 @@ function displayCard(cardData, allCards) {
     console.log("Description:", imageData.description);
     console.log("Hint:", imageData.hint);
     console.log("----------------------");
-    let score = 0;
-    const score_text = document.querySelector('#score')
+
+
     // Add an event listener to the slider container
     img.addEventListener("click", (event) => {
       // Check if the clicked element is an image
@@ -185,16 +196,27 @@ function displayCard(cardData, allCards) {
         if (clickedAlt === `card ${currentCard}`) {
           // Increment the score
           score++;
-          score_text.textContent = score;
-          console.log("Score:", score);
+          scoreText.textContent = score;
+
+          // Save the updated score to localStorage
+          localStorage.setItem("score", score);
+
+          // Reset the timer to starting seconds
+
         }
+        time = startingSeconds;
+        localStorage.setItem("savedTime", time);
+        setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
+        stopCountDown(); // Start the countdown
       }
       SliderContainer.classList.add("hidden");
-      setDefaultCard();
+      setDefaultCard(clickedImageIndex);
       shuffleButton.style.display = "block";
       stopCountDown();
     });
+
   });
+
 
   // Update the Swiper instance
   swiper.update();
