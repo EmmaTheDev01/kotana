@@ -70,7 +70,7 @@ function changeCountDown() {
     // Reset the timer to 20 seconds using localStorage saved time
     time = Math.max(localStorage.getItem("savedTime") || 0, startingSeconds);
     //Hide the slider container
-    SliderContainer.style.display="none";
+    SliderContainer.style.display = "none";
   }
 
   time--;
@@ -189,31 +189,35 @@ function displaySlider(images) {
       if (event.target.tagName === "IMG") {
         // Get the clicked image's alt attribute
         const clickedAlt = event.target.alt;
-    
+
         // Get the current card's description
         const currentCard = document.querySelector(".description-heading").textContent.split(":")[1].trim();
-    
+
         // Check if the clicked image's alt is equal to the current card's description
         if (clickedAlt === `card ${currentCard}`) {
           // Increment the score
           score++;
           scoreText.textContent = score;
-    
+
           // Save the updated score to localStorage
           localStorage.setItem("score", score);
-    
+
           // Reset the timer to starting seconds
           time = startingSeconds;
           localStorage.setItem("savedTime", time);
           setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
-          stopCountDown(); // Start the countdown
+          stopCountDown();
         }
       }
       // Continue with the rest of your code...
       SliderContainer.classList.add("hidden");
       setDefaultCard(currentIndex);
       shuffleButton.style.display = "block";
+      time = startingSeconds;
+      localStorage.setItem("savedTime", time);
+      setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
       stopCountDown();
+
     });
 
   });
