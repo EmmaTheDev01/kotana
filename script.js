@@ -101,7 +101,7 @@ shuffleButton.addEventListener("click", () => {
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
   time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
   stopCountDown(); // Stop the countdown if it's already running
-  startCountDown(); // Start the countdown
+ 
   // Reduce the height of the default card
   defaultCard.style.width = "100px";
   defaultCard.classList.add("shaking-image");
@@ -151,6 +151,7 @@ function displayCard(cardData, allCards) {
   // Display images in the slider with the same hint
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
+  startCountDown(); // Start the countdown
 }
 
 function displaySlider(images) {
