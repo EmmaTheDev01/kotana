@@ -82,17 +82,21 @@ function setTimerStyle(color, minutes = "", seconds = "") {
   timer.style.color = color;
   timer.innerHTML = `${minutes} : ${seconds}`;
 }
-//Set default card
-function setDefaultCard(clickedImageIndex) {
+//Setting the default card to the clicked image
+
+function setDefaultCard(clickedImageIndex, clickedImageSrc) {
   defaultCard.classList.remove("shaking-image");
 
   // Get the clicked image element using Swiper API
   const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
 
-  defaultCard.innerHTML = clickedImage.outerHTML;
+  // Replace the default card with the clicked image
+  defaultCard.innerHTML = `<img src="${clickedImageSrc}" class="card-img" alt="card">`;
+
   SliderContainer.classList.add("hidden");
   stopCountDown();
   shuffleButton.style.display = "block";
+
 }
 
 
@@ -101,7 +105,7 @@ shuffleButton.addEventListener("click", () => {
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
   time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
   stopCountDown(); // Stop the countdown if it's already running
- 
+
   // Reduce the height of the default card
   defaultCard.style.width = "100px";
   defaultCard.classList.add("shaking-image");
@@ -184,6 +188,7 @@ function displaySlider(images) {
     console.log("Hint:", imageData.hint);
     console.log("----------------------");
 
+    //Clicking the image to play the game.
 
     img.addEventListener("click", (event) => {
       // Check if the clicked element is an image
@@ -228,5 +233,7 @@ function displaySlider(images) {
   swiper.update();
   const randomNumber = Math.floor(Math.random() * 7);
   swiper.slideTo(randomNumber);
+
 }
+
 
