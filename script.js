@@ -89,7 +89,7 @@ function setDefaultCard(clickedImageIndex, clickedImageSrc) {
 
   // Get the clicked image element using Swiper API
   const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
-
+  console.log(clickedImage)
   // Replace the default card with the clicked image
   defaultCard.innerHTML = `<img src="${clickedImageSrc}" class="card-img" alt="card">`;
 
@@ -183,7 +183,6 @@ function displaySlider(images) {
     swiper.appendSlide(slide);
 
     // Log image data to console
-    console.log("Image Source:", imageData.image);
     console.log("Description:", imageData.description);
     console.log("Hint:", imageData.hint);
     console.log("----------------------");

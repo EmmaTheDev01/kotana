@@ -23,7 +23,76 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
+  background-color: #f4f5f6;
 }
+.login, .register{
+  
+  width: 30%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(255, 255, 255);
+  box-shadow: 0 4px 8px 0 rgba(92, 92, 92, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+input{
+  display: block;
+  width: 90%;
+  margin: 1rem;
+  padding: .5rem;
+  border: 2px solid#949494;
+  outline: none;
+  color: #7e2929;
+}
+.check{
+  display: flex;
+  justify-content: flex-start;
+}
+.check span{
+  margin-top: 1rem;
+  font-size: .9rem;
+}
+.checkbox{
+  width: 20px;
+  margin-top: 1.3rem;
+  margin-right: 0.5rem;
+  margin-left: 0.5rem;
+  -ms-transform: scale(1); /* IE */
+  -moz-transform: scale(1); /* FF */
+  -webkit-transform: scale(1); /* Safari and Chrome */
+  -o-transform: scale(1); /* Opera */
+  transform: scale(1);
+  padding: 10px;
+  background-color: #85182a;
+}
+.login_btn, .register_btn{
+  background-color: #7e2929;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.login_btn:hover,.register_btn:hover{
+  background-color: #000;
+  
+}
+.login a, .register a{
+  text-decoration: none;
+  color: #85182a;
+}
+.skip{
+  float: right;
+  margin-top: 1rem;
+}
+/* 
+Game styling, including the cards, container and all other game 
+components */
 .game {
   height: 100vh;
   width: 100%;
