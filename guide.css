@@ -17,6 +17,7 @@ body{
 }
 .instructions a{
     text-align: center;
+    padding: 1rem;
     margin: 1rem;
     display: flex;
     justify-content: center;
@@ -34,13 +35,11 @@ body{
 .instructions .skip_btn{
     text-decoration: none;
 }
-.instructions .skip_tutorial{
+.instructions .skip_text{
     position: absolute;
     top: 10%;
     right: 3%;
-    width: 9rem;
-    background-color: #7e2929;
-    color: #fff;
+    color: #aa4646;
     font-size: 1rem;
     font-weight: 500;
     padding: .5rem;
@@ -48,3 +47,23 @@ body{
     border-radius: 4px;
     cursor: pointer;
 }
+@media screen and (max-width:570px) {
+    .instructions h3{
+        padding: 1rem;
+       text-align: center;
+       font-weight: 700;
+       color: rgb(82, 82, 82);
+       font-size: 1rem;
+    }
+    .instructions .skip_text{
+        top: 4%;
+        right: 2%;
+        font-size: 1rem;
+        font-weight: 500;
+        padding: 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    
+  }

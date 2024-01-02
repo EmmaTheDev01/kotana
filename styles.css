@@ -38,15 +38,24 @@ body {
   background-color: rgba(255, 255, 255);
   box-shadow: 0 4px 8px 0 rgba(92, 92, 92, 0.2),
     0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 4px;
+}
+@media screen and (max-width:570px) {
+  .login, .register{
+    width: 80%;
+  }
+  
 }
 input{
   display: block;
   width: 90%;
-  margin: 1rem;
   padding: .5rem;
+  margin-top: 1rem;
   border: 2px solid#949494;
   outline: none;
   color: #7e2929;
+  margin-left: auto;
+  margin-right: auto;
 }
 .check{
   display: flex;
@@ -90,9 +99,16 @@ input{
   float: right;
   margin-top: 1rem;
 }
+.login label, .register label{
+  font-size: .9rem;
+  margin-top: 1rem;
+}
+
+
 /* 
 Game styling, including the cards, container and all other game 
 components */
+
 .game {
   height: 100vh;
   width: 100%;
@@ -175,7 +191,25 @@ nav ul li {
   color: #fff;
   cursor: pointer;
 }
-
+.success, .fail{
+  position: absolute;
+  top: 6%;
+  left: 0%;
+  right: 50%;
+  width: 30%;
+}
+.success .scored{
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  background-color: green;
+}
+.fail .failed{
+  font-size: 1rem;
+  font-weight: 900;
+  color: rgb(255, 255, 255);
+  background-color: red;
+}
 .hidden {
   display: none;
 }

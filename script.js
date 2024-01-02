@@ -41,7 +41,8 @@ let countdownInterval;
 const slider = document.querySelector(".slide-content");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
-
+const success = document.querySelector('.success');
+const fail = document.querySelector('.fail')
 //Score declaration
 let score = localStorage.getItem("score") || 0;
 const scoreText = document.querySelector('#score');
@@ -84,28 +85,30 @@ function setTimerStyle(color, minutes = "", seconds = "") {
 }
 //Setting the default card to the clicked image
 
-function setDefaultCard(clickedImageIndex, clickedImageSrc) {
+function setDefaultCard(clickedImageIndex) {
   defaultCard.classList.remove("shaking-image");
 
   // Get the clicked image element using Swiper API
   const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
-  console.log(clickedImage)
+
+  // Get the source file of the clicked image
+  const clickedImageSrc = clickedImage.getAttribute("src");
+
   // Replace the default card with the clicked image
   defaultCard.innerHTML = `<img src="${clickedImageSrc}" class="card-img" alt="card">`;
 
   SliderContainer.classList.add("hidden");
   stopCountDown();
   shuffleButton.style.display = "block";
-
 }
-
 
 // Event listener for the shuffle button
 shuffleButton.addEventListener("click", () => {
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
   time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
   stopCountDown(); // Stop the countdown if it's already running
-
+  success.classList.add('hidden');
+  fail.classList.add('hidden')
   // Reduce the height of the default card
   defaultCard.style.width = "100px";
   defaultCard.classList.add("shaking-image");
@@ -203,20 +206,22 @@ function displaySlider(images) {
           // Increment the score
           score++;
           scoreText.textContent = score;
-
+          success.classList.remove('hidden');
           // Save the updated score to localStorage
           localStorage.setItem("score", score);
-
           // Reset the timer to starting seconds
           time = startingSeconds;
           localStorage.setItem("savedTime", time);
           setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
           stopCountDown();
         }
+        else{
+          fail.classList.remove('hidden')
+        }
       }
       // Continue with the rest of your code...
       SliderContainer.classList.add("hidden");
-      setDefaultCard(currentIndex);
+      setDefaultCard(swiper.activeIndex);
       shuffleButton.style.display = "block";
       time = startingSeconds;
       localStorage.setItem("savedTime", time);
