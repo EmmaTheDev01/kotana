@@ -132,7 +132,7 @@ nav ul {
 nav ul li {
   display: inline-block;
   float: right;
-  padding: 1px 16px;
+  padding: 1px 12px;
   color: #fff;
 }
 #user{
@@ -147,6 +147,27 @@ nav ul li {
 #score {
   font-size: 1.3rem;
   font-weight: 700;
+}
+.level{
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+@media screen and (max-width:570px) {
+  
+#timer {
+  font-size: 1rem;
+  font-weight: 700;
+  color: rgb(121, 236, 121);
+}
+#score {
+  font-size: 1rem;
+  font-weight: 700;
+}
+.level{
+  font-size: 1rem;
+}
+
+  
 }
 .default-card {
   padding: 1rem;

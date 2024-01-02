@@ -30,16 +30,19 @@ var swiper = new Swiper(".slide-content", {
   }
 });
 let startingSeconds = 60;
+
 const level_two = 45;
 const level_three = 35;
 const level_four = 30;
 const level_five = 20;
 let time = localStorage.getItem("savedTime") || startingSeconds;
+const game_level = document.querySelector('#game_level')
 const timer = document.getElementById("timer");
 const shuffleButton = document.getElementById("shuffle");
 const upperCard = document.querySelector(".card");
 const defaultCard = document.querySelector("#default_card");
 const SliderContainer = document.querySelector(".slide-container");
+
 let countdownInterval;
 
 const slider = document.querySelector(".slide-content");
@@ -53,7 +56,6 @@ const scoreText = document.querySelector('#score');
 scoreText.textContent = score;
 
 let currentIndex = 0;
-
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
@@ -195,115 +197,106 @@ function displaySlider(images) {
     console.log("----------------------");
 
     //Clicking the image to play the game.
-// Add a new level variable
-let level = 1;
+    // Add a new level variable
+    let level = 0
+    console.log(score)
+    // Function to check and update the level
+    function checkLevel() {
+      if (score <= 10) {
+        // Increase the level to 2
+        level = 1;
+        // Update any UI elements or perform actions related to level change
+        console.log("Level up! Current level: ", level);
+        game_level.textContent = level
 
-// Function to check and update the level
-function checkLevel() {
-  if (score >= 10 && level === 1) {
-    // Increase the level to 2
-    level = 2;
+        // Optionally, you can reset the score or perform other actions when leveling up
+        // score = 0;
+        // localStorage.setItem("score", score);
 
-    // Update any UI elements or perform actions related to level change
-    console.log("Level up! Current level: ", level);
-    
-    // Optionally, you can reset the score or perform other actions when leveling up
-    // score = 0;
-    // localStorage.setItem("score", score);
+        // Update the startingSeconds based on the new level
+        startingSeconds = level_two;
+      } else if (score >= 20) {
+        // Increase the level to 3
+        level = 2;
+        // Update any UI elements or perform actions related to level change
+        console.log("Level up! Current level: ", level);
+        game_level.textContent = level;
+        // Update the startingSeconds based on the new level
+        startingSeconds = level_three;
+      }
+      else if (score >= 30) {
+        // Increase the level to 3
+        level = 3;
 
-    // Update the startingSeconds based on the new level
-    startingSeconds = level_two;
-  } else if (score >= 20 && level === 2) {
-    // Increase the level to 3
-    level = 3;
+        // Update any UI elements or perform actions related to level change
+        console.log("Level up! Current level: ", level);
 
-    // Update any UI elements or perform actions related to level change
-    console.log("Level up! Current level: ", level);
-
-    // Update the startingSeconds based on the new level
-    startingSeconds = level_three;
-  }
-  else if (score >= 30 && level === 3) {
-    // Increase the level to 3
-    level = 3;
-
-    // Update any UI elements or perform actions related to level change
-    console.log("Level up! Current level: ", level);
-
-    // Update the startingSeconds based on the new level
-    startingSeconds = level_four;
-  }
-  else if (score >= 40 && level === 4) {
-    // Increase the level to 3
-    level = 4;
-
-    // Update any UI elements or perform actions related to level change
-    console.log("Level up! Current level: ", level);
-
-    // Update the startingSeconds based on the new level
-    startingSeconds = level_five;
-  }
-  else if (score >= 45 && level === 5) {
-    // Increase the level to 3
-    level = 4;
-
-    // Update any UI elements or perform actions related to level change
-    console.log("Level up! Current level: ", level);
-
-    // Update the startingSeconds based on the new level
-    
-  }
+        // Update the startingSeconds based on the new level
+        startingSeconds = level_four;
+      }
+      else if (score >= 40) {
+        // Increase the level to 3
+        level = 4;
+        // Update any UI elements or perform actions related to level change
+        console.log("Level up! Current level: ", level);
+        game_level.textContent = level;
+        // Update the startingSeconds based on the new level
+        startingSeconds = level_five;
+      }
+      else if (score >= 45) {
+        // Increase the level to 3
+        level = 4;
+        // Update any UI elements or perform actions related to level change
+        console.log("Level up! Current level: ", level);
+        game_level.textContent = level;
+      }
 
 
-  // Update the timer with the new startingSeconds value
-  time = localStorage.getItem("savedTime") || startingSeconds;
-  setTimerStyle("rgb(121, 236, 121)", "00", "00");
-}
+      // Update the timer with the new startingSeconds value
+      time = localStorage.getItem("savedTime") || startingSeconds;
+      setTimerStyle("rgb(121, 236, 121)", "00", "00");
+    }
+    checkLevel();
 
-// Modify the score increment code in the img click event listener
-img.addEventListener("click", (event) => {
-  // Check if the clicked element is an image
-  if (event.target.tagName === "IMG") {
-    // Get the clicked image's alt attribute
-    const clickedAlt = event.target.alt;
+    // Modify the score increment code in the img click event listener
+    img.addEventListener("click", (event) => {
+      // Check if the clicked element is an image
+      if (event.target.tagName === "IMG") {
+        // Get the clicked image's alt attribute
+        const clickedAlt = event.target.alt;
 
-    // Get the current card's description
-    const currentCard = document.querySelector(".description-heading").textContent.split(":")[1].trim();
+        // Get the current card's description
+        const currentCard = document.querySelector(".description-heading").textContent.split(":")[1].trim();
 
-    // Check if the clicked image's alt is equal to the current card's description
-    if (clickedAlt === `card ${currentCard}`) {
-      // Increment the score
-      score++;
-      scoreText.textContent = score;
+        // Check if the clicked image's alt is equal to the current card's description
+        if (clickedAlt === `card ${currentCard}`) {
+          // Increment the score
+          score++;
+          scoreText.textContent = score;
+          success.classList.remove('hidden');
+          // Save the updated score to localStorage
+          localStorage.setItem("score", score);
 
-      // Call the function to check and update the level
-      checkLevel();
-
-      success.classList.remove('hidden');
-      // Save the updated score to localStorage
-      localStorage.setItem("score", score);
-
-      // Reset the timer to starting seconds
+          // Reset the timer to starting seconds
+          time = startingSeconds;
+          localStorage.setItem("savedTime", time);
+          setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
+          stopCountDown();
+        } else {
+          fail.classList.remove('hidden');
+        }
+      }
+      // Continue with the rest of your code...
+      SliderContainer.classList.add("hidden");
+      setDefaultCard(swiper.activeIndex);
+      shuffleButton.style.display = "block";
       time = startingSeconds;
       localStorage.setItem("savedTime", time);
       setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
       stopCountDown();
-    } else {
-      fail.classList.remove('hidden');
-    }
-  }
-  // Continue with the rest of your code...
-  SliderContainer.classList.add("hidden");
-  setDefaultCard(swiper.activeIndex);
-  shuffleButton.style.display = "block";
-  time = startingSeconds;
-  localStorage.setItem("savedTime", time);
-  setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
-  stopCountDown();
-});
+    });
 
   });
-
 
   // Update the Swiper instance
   swiper.update();
@@ -311,5 +304,4 @@ img.addEventListener("click", (event) => {
   swiper.slideTo(randomNumber);
 
 }
-
 
