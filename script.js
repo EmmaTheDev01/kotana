@@ -198,7 +198,7 @@ function displaySlider(images) {
 
     //Clicking the image to play the game.
     // Add a new level variable
-    let level = 0
+    let level = 1
     console.log(score)
     // Function to check and update the level
     function checkLevel() {
@@ -207,34 +207,28 @@ function displaySlider(images) {
         level = 1;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
-        game_level.textContent = level
-
-        // Optionally, you can reset the score or perform other actions when leveling up
-        // score = 0;
-        // localStorage.setItem("score", score);
-
-        // Update the startingSeconds based on the new level
         startingSeconds = level_two;
-      } else if (score >= 20) {
+        game_level.textContent = level
+      } else if (score >= 20 && score < 30) {
         // Increase the level to 3
         level = 2;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
-        startingSeconds = level_three;
+        startingSeconds = level_two;
       }
-      else if (score >= 30) {
+      else if (score >= 30 && score < 40) {
         // Increase the level to 3
         level = 3;
 
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
-
+        game_level.textContent = level;
         // Update the startingSeconds based on the new level
         startingSeconds = level_four;
       }
-      else if (score >= 40) {
+      else if (score >= 40 && score < 45) {
         // Increase the level to 3
         level = 4;
         // Update any UI elements or perform actions related to level change
