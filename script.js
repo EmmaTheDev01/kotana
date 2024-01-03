@@ -3,7 +3,7 @@
 var swiper = new Swiper(".slide-content", {
   slidesPerView: 5,
   centeredSlides: true,
-  spaceBetween: 20,
+  spaceBetween: 30,
   loop: true,
   loopAllGroupWithBlank: true,
   grabCursor: true,
@@ -21,7 +21,7 @@ var swiper = new Swiper(".slide-content", {
     0: {
       slidesPerView: 1,
     },
-    540: {
+    440: {
       slidesPerView: 2,
     },
     950: {
@@ -30,7 +30,7 @@ var swiper = new Swiper(".slide-content", {
   }
 });
 let startingSeconds = 60;
-
+const level_one = 60;
 const level_two = 45;
 const level_three = 35;
 const level_four = 30;
@@ -43,6 +43,11 @@ const upperCard = document.querySelector(".card");
 const defaultCard = document.querySelector("#default_card");
 const SliderContainer = document.querySelector(".slide-container");
 
+//Audio sounds
+const scoreSound = document.getElementById('scoreSound');
+const failSound = document.getElementById('failSound');
+const timeoutSound = document.getElementById('timeoutSound');
+const levelUpSound = document.getElementById('levelUpSound');
 let countdownInterval;
 
 const slider = document.querySelector(".slide-content");
@@ -78,6 +83,7 @@ function changeCountDown() {
     time = Math.max(localStorage.getItem("savedTime") || 0, startingSeconds);
     //Hide the slider container
     SliderContainer.style.display = "none";
+    timeoutSound.play();
   }
 
   time--;
@@ -128,6 +134,9 @@ shuffleButton.addEventListener("click", () => {
 // Function to fetch data from JSON file and display
 async function fetchDataAndDisplay() {
   try {
+    const loadingSpinner = document.querySelector('.loading-spinner');
+    loadingSpinner.style.display = 'block';
+
     const response = await fetch("data.json");
     console.log("Response status:", response.status);
 
@@ -139,6 +148,8 @@ async function fetchDataAndDisplay() {
 
     // Display the first card in the UI
     displayCard(data.cards[0], data.cards);
+    // Hide the loading spinner after fetching data
+    loadingSpinner.style.display = 'none';
   } catch (error) {
     console.error("Error fetching data:", error);
   }
@@ -181,7 +192,7 @@ function displaySlider(images) {
 
     const img = document.createElement("img");
     img.src = imageData.image;
-    img.classList.add('card-img');
+    img.classList.add('card-img', 'lazyload');
     img.alt = `card ${imageData.description}`;
     img.style.cursor = "pointer";
     slider.style.overflow = "hidden";
@@ -207,8 +218,9 @@ function displaySlider(images) {
         level = 1;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
-        startingSeconds = level_two;
+        startingSeconds = level_one;
         game_level.textContent = level
+        levelUpSound.play();
       } else if (score >= 20 && score < 30) {
         // Increase the level to 3
         level = 2;
@@ -217,6 +229,7 @@ function displaySlider(images) {
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
         startingSeconds = level_two;
+        levelUpSound.play();
       }
       else if (score >= 30 && score < 40) {
         // Increase the level to 3
@@ -227,6 +240,7 @@ function displaySlider(images) {
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
         startingSeconds = level_four;
+        levelUpSound.play();
       }
       else if (score >= 40 && score < 45) {
         // Increase the level to 3
@@ -236,6 +250,7 @@ function displaySlider(images) {
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
         startingSeconds = level_five;
+        levelUpSound.play();
       }
       else if (score >= 45) {
         // Increase the level to 3
@@ -243,6 +258,7 @@ function displaySlider(images) {
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
+        levelUpSound.play();
       }
 
 
@@ -270,7 +286,7 @@ function displaySlider(images) {
           success.classList.remove('hidden');
           // Save the updated score to localStorage
           localStorage.setItem("score", score);
-
+          scoreSound.play(); // Play the score sound effect
           // Reset the timer to starting seconds
           time = startingSeconds;
           localStorage.setItem("savedTime", time);
@@ -278,6 +294,7 @@ function displaySlider(images) {
           stopCountDown();
         } else {
           fail.classList.remove('hidden');
+          failSound.play();
         }
       }
       // Continue with the rest of your code...

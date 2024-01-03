@@ -23,7 +23,11 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  background-color: #f4f5f6;
+  background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yNTEtbWluZC0xNS1hXzEuanBn.jpg');
+  background-repeat: no-repeat;
+  background-color: #1f114c;
+  background-position: center;
+  background-size: cover;
 }
 .login, .register{
   
@@ -152,6 +156,25 @@ nav ul li {
   font-size: 1.3rem;
   font-weight: 700;
 }
+.loading-spinner {
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -20px;
+  margin-left: -20px;
+  display: none; /* Initially hide the spinner */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @media screen and (max-width:570px) {
   
 #timer {
@@ -166,8 +189,6 @@ nav ul li {
 .level{
   font-size: 1rem;
 }
-
-  
 }
 .default-card {
   padding: 1rem;
@@ -178,6 +199,8 @@ nav ul li {
 #default_card {
   width: 14rem;
   height: 100%;
+  border: 2px solid #fff;
+  border-radius: 9px;
 }
 .shaking-image {
   animation: shake 0.9s ease-in-out;
@@ -194,6 +217,7 @@ nav ul li {
 .description h3 {
   display: block;
   font-size: 1.1rem;
+  color: #dfd9d9;
 }
 .shufflebtn {
   display: flex;
@@ -211,6 +235,11 @@ nav ul li {
   background-color: #7e2929;
   color: #fff;
   cursor: pointer;
+}
+#shuffle:hover{
+  background-color: #000000;
+  border: 1px solid #fff;
+
 }
 .success, .fail{
   position: absolute;
@@ -261,6 +290,14 @@ nav ul li {
   padding: 3px;
   object-fit: cover;
 }
+.card-img:hover {
+  width: 10rem;
+  height: 100%;
+  border: 2px solid #771919;
+  border-radius: 9px;
+}
+
+
 .swiper-button-next {
   right: 0;
 }

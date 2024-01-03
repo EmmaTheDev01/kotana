@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styles.css" />
   <title>Kotana Game - play single player or multiple player.</title>
+  
 </head>
 
 <body>
@@ -31,6 +32,7 @@
     <div class="fail hidden">
       <h1 class="failed">Try Again</h1>
     </div>
+    <div class="loading-spinner"></div>
     <div class="description">
       <h3 class="description-heading">Description:</h3>
       <h3 class="hint-heading">Hint:</h3>
@@ -81,8 +83,29 @@
       <div class="swiper-button-prev"></div>
       <div class="swiper-pagination"></div>
     </div>
+    <audio id="scoreSound">
+      <source src="/audio/score.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="failSound">
+      <source src="/audio/fail.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="timeoutSound">
+      <source src="/audio/timeout.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+    
+    <audio id="levelUpSound">
+      <source src="/audio/levelup.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
     <script src="swiper-bundle.min.js"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js" integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ" crossorigin="anonymous"></script>
+
 </body>
 
 </html>
