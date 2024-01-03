@@ -98,22 +98,29 @@ function setTimerStyle(color, minutes = "", seconds = "") {
 //Setting the default card to the clicked image
 
 function setDefaultCard(clickedImageIndex) {
+  console.log("Setting default card with clicked image index:", clickedImageIndex);
+
   defaultCard.classList.remove("shaking-image");
 
   // Get the clicked image element using Swiper API
   const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
 
-  // Get the source file of the clicked image
-  const clickedImageSrc = clickedImage.getAttribute("src");
+  if (clickedImage) {
+    // Get the source file of the clicked image
+    const clickedImageSrc = clickedImage.getAttribute("src");
 
-  // Replace the default card with the clicked image
-  defaultCard.innerHTML = `<img src="${clickedImageSrc}" class="card-img" alt="card">`;
+    // Replace the default card's src attribute with the clicked image's src
+    defaultCard.setAttribute("src", clickedImageSrc);
+
+    console.log("Default card updated with clicked image:", clickedImageSrc);
+  } else {
+    console.error("Error: Clicked image not found.");
+  }
 
   SliderContainer.classList.add("hidden");
   stopCountDown();
   shuffleButton.style.display = "block";
 }
-
 // Event listener for the shuffle button
 shuffleButton.addEventListener("click", () => {
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
@@ -239,7 +246,7 @@ function displaySlider(images) {
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
-        startingSeconds = level_four;
+        startingSeconds = level_three;
         levelUpSound.play();
       }
       else if (score >= 40 && score < 45) {
@@ -249,15 +256,17 @@ function displaySlider(images) {
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
         // Update the startingSeconds based on the new level
-        startingSeconds = level_five;
+        startingSeconds = level_four;
         levelUpSound.play();
       }
       else if (score >= 45) {
         // Increase the level to 3
-        level = 4;
+        level = 5;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
+          // Update the startingSeconds based on the new level
+          startingSeconds = level_five;
         levelUpSound.play();
       }
 
