@@ -2,7 +2,6 @@
 //SLIDER
 var swiper = new Swiper(".slide-content", {
   slidesPerView: 5,
-  centeredSlides: true,
   spaceBetween: 30,
   loop: true,
   loopAllGroupWithBlank: true,
@@ -20,14 +19,17 @@ var swiper = new Swiper(".slide-content", {
   breakpoints: {
     0: {
       slidesPerView: 1,
+      centeredSlides: true,
     },
     440: {
       slidesPerView: 2,
+      centeredSlides: true,
     },
     950: {
       slidesPerView: 5,
     },
-  }
+  },
+  initialSlide: 2, // Set the index of the card you want to be initially visible
 });
 let startingSeconds = 60;
 const level_one = 60;
@@ -48,8 +50,9 @@ const scoreSound = document.getElementById('scoreSound');
 const failSound = document.getElementById('failSound');
 const timeoutSound = document.getElementById('timeoutSound');
 const levelUpSound = document.getElementById('levelUpSound');
+//Countdown interval
 let countdownInterval;
-
+//swiper 
 const slider = document.querySelector(".slide-content");
 const prevButton = document.getElementById("prev");
 const nextButton = document.getElementById("next");
@@ -59,6 +62,11 @@ const fail = document.querySelector('.fail')
 let score = localStorage.getItem("score") || 0;
 const scoreText = document.querySelector('#score');
 scoreText.textContent = score;
+//Ingame alerts
+const announcers = document.querySelector('.announcers');
+const timeout_text = document.querySelector('.timeout_text');
+const level_txt = document.querySelector('.level_txt');
+const level_number = document.querySelector('#level_number');
 
 let currentIndex = 0;
 function startCountDown() {
@@ -79,11 +87,14 @@ function changeCountDown() {
   if (time === 0) {
     setTimerStyle("red", "00", "00");
     stopCountDown();
+    shuffleButton.classList.add('hidden');
     // Reset the timer to 20 seconds using localStorage saved time
     time = Math.max(localStorage.getItem("savedTime") || 0, startingSeconds);
     //Hide the slider container
-    SliderContainer.style.display = "none";
+    announcers.classList.remove('hidden');
+    timeout_text.classList.remove('hidden');
     timeoutSound.play();
+    SliderContainer.style.display = "none";
   }
 
   time--;
@@ -95,26 +106,21 @@ function setTimerStyle(color, minutes = "", seconds = "") {
   timer.style.color = color;
   timer.innerHTML = `${minutes} : ${seconds}`;
 }
-//Setting the default card to the clicked image
+//Setting the default card to the correct image.
 
-function setDefaultCard(clickedImageIndex) {
-  console.log("Setting default card with clicked image index:", clickedImageIndex);
+function setDefaultCard(cardData) {
+  console.log("Setting default card with clicked image data:", cardData);
 
   defaultCard.classList.remove("shaking-image");
 
-  // Get the clicked image element using Swiper API
-  const clickedImage = swiper.slides[clickedImageIndex].querySelector(".card-img");
+  if (cardData) {
+    // Set the default card's src and alt attributes based on the clicked image data
+    defaultCard.setAttribute("src", cardData.image);
+    defaultCard.alt = `card ${cardData.description}`;
 
-  if (clickedImage) {
-    // Get the source file of the clicked image
-    const clickedImageSrc = clickedImage.getAttribute("src");
-
-    // Replace the default card's src attribute with the clicked image's src
-    defaultCard.setAttribute("src", clickedImageSrc);
-
-    console.log("Default card updated with clicked image:", clickedImageSrc);
+    console.log("Default card updated with clicked image data:", cardData);
   } else {
-    console.error("Error: Clicked image not found.");
+    console.error("Error: Clicked image data not found.");
   }
 
   SliderContainer.classList.add("hidden");
@@ -123,6 +129,8 @@ function setDefaultCard(clickedImageIndex) {
 }
 // Event listener for the shuffle button
 shuffleButton.addEventListener("click", () => {
+  announcers.classList.add('hidden');
+  SliderContainer.style.display = "block";
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
   time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
   stopCountDown(); // Stop the countdown if it's already running
@@ -130,6 +138,7 @@ shuffleButton.addEventListener("click", () => {
   fail.classList.add('hidden')
   // Reduce the height of the default card
   defaultCard.style.width = "100px";
+  defaultCard.setAttribute('src', "/cards/1.png")
   defaultCard.classList.add("shaking-image");
   SliderContainer.classList.remove("hidden");
 
@@ -148,7 +157,7 @@ async function fetchDataAndDisplay() {
     console.log("Response status:", response.status);
 
     const data = await response.json();
-    console.log("Data received:", data);
+    // console.log("Data received:", data);
 
     // Shuffle the cards
     shuffleArray(data.cards);
@@ -171,6 +180,8 @@ function shuffleArray(array) {
 }
 
 // Function to display a card
+let currentCardData; // Declare a variable to hold the current card data
+
 function displayCard(cardData, allCards) {
   // Update description and hint
   const descriptionElement = document.querySelector(".description-heading");
@@ -183,6 +194,8 @@ function displayCard(cardData, allCards) {
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
   startCountDown(); // Start the countdown
+  // Set the current card data
+  currentCardData = cardData;
 }
 
 function displaySlider(images) {
@@ -217,11 +230,11 @@ function displaySlider(images) {
     //Clicking the image to play the game.
     // Add a new level variable
     let level = 1
-    console.log(score)
+    console.log("score: ", score)
     // Function to check and update the level
     function checkLevel() {
       if (score <= 10) {
-        // Increase the level to 2
+        // Set the level
         level = 1;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
@@ -265,8 +278,8 @@ function displaySlider(images) {
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
         game_level.textContent = level;
-          // Update the startingSeconds based on the new level
-          startingSeconds = level_five;
+        // Update the startingSeconds based on the new level
+        startingSeconds = level_five;
         levelUpSound.play();
       }
 
@@ -291,7 +304,7 @@ function displaySlider(images) {
         if (clickedAlt === `card ${currentCard}`) {
           // Increment the score
           score++;
-          scoreText.textContent = score;
+          scoreText.textContent = `score: ${score}`;
           success.classList.remove('hidden');
           // Save the updated score to localStorage
           localStorage.setItem("score", score);
@@ -308,7 +321,7 @@ function displaySlider(images) {
       }
       // Continue with the rest of your code...
       SliderContainer.classList.add("hidden");
-      setDefaultCard(swiper.activeIndex);
+      setDefaultCard(currentCardData);
       shuffleButton.style.display = "block";
       time = startingSeconds;
       localStorage.setItem("savedTime", time);
