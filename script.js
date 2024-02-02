@@ -298,10 +298,10 @@ function displaySlider(images) {
         const clickedAlt = event.target.alt;
 
         // Get the current card's description
-        const currentCard = document.querySelector(".description-heading").textContent.split(":")[1].trim();
+        const currentCard = currentCardData.description.trim();
 
         // Check if the clicked image's alt is equal to the current card's description
-        if (clickedAlt === `card ${currentCard}`) {
+        if (clickedAlt.trim() === `card ${currentCard}`) {
           // Increment the score
           score++;
           scoreText.textContent = `score: ${score}`;
@@ -319,7 +319,7 @@ function displaySlider(images) {
           failSound.play();
         }
       }
-      // Continue with the rest of your code...
+
       SliderContainer.classList.add("hidden");
       setDefaultCard(currentCardData);
       shuffleButton.style.display = "block";
