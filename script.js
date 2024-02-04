@@ -45,6 +45,7 @@ const upperCard = document.querySelector(".card");
 const defaultCard = document.querySelector("#default_card");
 const SliderContainer = document.querySelector(".slide-container");
 const menu = document.querySelector(".menu");
+const menu_item = document.querySelector(".menu-item");
 
 
 //Audio sounds
@@ -76,6 +77,14 @@ user.addEventListener('click', () => {
     menu.classList.remove('hidden');
   } else {
     menu.classList.add('hidden');
+  }
+})
+//menu hiding
+menu_item.addEventListener('click', () => {
+  if (menu.classList.contains('hidden')) {
+    menu.classList.add('hidden');
+  } else {
+    menu.classList.remove('hidden');
   }
 })
 //Timer
@@ -312,7 +321,7 @@ function displaySlider(images) {
         const currentCard = currentCardData.description.trim();
 
         // Check if the clicked image's alt is equal to the current card's description
-        if (clickedAlt.trim() === `card ${currentCard}`) {
+        if (clickedAlt.trim() === `card ${currentCard.trim()}`) {
           // Increment the score
           score++;
           scoreText.textContent = `score: ${score}`;
@@ -338,6 +347,7 @@ function displaySlider(images) {
       localStorage.setItem("savedTime", time);
       setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
       stopCountDown();
+      img.removeEventListener("click", this);
     });
 
   });

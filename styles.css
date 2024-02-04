@@ -355,6 +355,9 @@ nav ul li {
 }
 
 @media screen and (max-width: 900px) {
+  .menu{
+    display: none;
+  }
   .announcers {
     display: flex;
     justify-content: center;
