@@ -44,6 +44,8 @@ const shuffleButton = document.getElementById("shuffle");
 const upperCard = document.querySelector(".card");
 const defaultCard = document.querySelector("#default_card");
 const SliderContainer = document.querySelector(".slide-container");
+const menu = document.querySelector(".menu");
+
 
 //Audio sounds
 const scoreSound = document.getElementById('scoreSound');
@@ -68,6 +70,15 @@ const timeout_text = document.querySelector('.timeout_text');
 const level_txt = document.querySelector('.level_txt');
 const level_number = document.querySelector('#level_number');
 
+//Menu display
+user.addEventListener('click', () => {
+  if (menu.classList.contains('hidden')) {
+    menu.classList.remove('hidden');
+  } else {
+    menu.classList.add('hidden');
+  }
+})
+//Timer
 let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);

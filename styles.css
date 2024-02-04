@@ -168,10 +168,35 @@ nav ul li {
   padding: 1px 12px;
   color: #fff;
 }
-
+.menu{
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+  position: absolute;
+  left: 87%;
+  border-radius: 0px 0px 10px 10px;
+  backdrop-filter: blur(10px);
+  opacity: .8;
+}
+.menu ul{
+  padding: 1rem;
+}
+.menu li{
+  list-style-type: none;
+  border-bottom: 1px solid #3f3f3f;
+  padding: .5rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+#logout{
+  color: #ff0000;
+  font-style: 1rem;
+  border-bottom: none;
+}
 #user {
   font-size: 1.3rem;
   margin-right: 1rem;
+  cursor: pointer;
 }
 
 #timer {
