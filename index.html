@@ -12,10 +12,10 @@
     <div class="login">
         <div class="form-box">
             <form id="loginForm">
-                <input type="email" name="email" id="email" placeholder="Enter your email" />
-                <input type="password" name="password" id="password" placeholder="Enter your password" />
+                <input type="email" name="email" id="email" placeholder="Enter your email" required />
+                <input type="password" name="password" id="password" placeholder="Enter your password" required />
                 <div class="check">
-                    <input type="checkbox" class="checkbox" />
+                    <input type="checkbox" class="checkbox" id="termsCheckbox" required />
                     <span>Agree to our terms and conditions</span>
                 </div>
 
@@ -30,6 +30,13 @@
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function (event) {
             event.preventDefault();
+
+            // Check if the checkbox is checked
+            const agreeTerms = document.getElementById('termsCheckbox').checked;
+            if (!agreeTerms) {
+                alert('Please agree to the terms and conditions');
+                return;
+            }
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;

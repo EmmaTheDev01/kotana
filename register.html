@@ -11,14 +11,19 @@
 <body>
     <div class="register">
         <div class="form-box">
-            <form>
-                <input type="text" name="Firstname" id="firstname" placeholder="Enter your Firstname" />
-                <input type="text" name="Lastname" id="lastname placeholder="Enter your Lastname" />
-                <input type="email" name="email" id="lastname" placeholder="Enter your email address" />
-                <input type="password" name="password" id="password" placeholder="Enter your password" />
-                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" />
+            <form id="registerForm">
+                <input type="text" name="Firstname" id="firstname" placeholder="Enter your Firstname" required />
+                <input type="text" name="Lastname" id="lastname" placeholder="Enter your Lastname" required />
+                <input type="email" name="email" id="email" placeholder="Enter your email address" required />
+                <span id="emailError" style="color: red; display: none;">Please enter a valid email address</span>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required />
+                <span id="passwordError" style="color: red; display: none;">Password must be at least 8 characters long
+                    and contain at least one uppercase letter, one lowercase letter, one number, and one special
+                    character</span>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password"
+                    required />
                 <div class="check">
-                    <input type="checkbox" id="termsCheckbox" class="checkbox" />
+                    <input type="checkbox" class="checkbox" id="termsCheckbox" required />
                     <span>Agree to our terms and conditions</span>
                 </div>
                 <input type="submit" class="register_btn" value="Start Game" />
@@ -26,19 +31,48 @@
             <label>You already have an account, <a href="index.html">Login</a> </label>
         </div>
     </div>
+
     <script>
-        document.getElementById("registerForm").addEventListener("submit", function(event) {
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
             event.preventDefault(); // Prevent the form from submitting normally
 
+            // Check if the checkbox is checked
+            const agreeTerms = document.getElementById("termsCheckbox").checked;
+            if (!agreeTerms) {
+                alert("Please agree to the terms and conditions");
+                return;
+            }
+
             // Gather form data
-            const formData = {
-                firstname: document.getElementById("firstname").value,
-                lastname: document.getElementById("lastname").value,
-                email: document.getElementById("email").value,
-                password: document.getElementById("password").value,
-                // confirm_password: document.getElementById("confirm_password").value,
-                // agree_terms: document.getElementById("termsCheckbox").checked
-            };
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById("emailError").style.display = "block";
+                return;
+            } else {
+                document.getElementById("emailError").style.display = "none";
+            }
+
+            // Validate password strength
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById("passwordError").style.display = "block";
+                return;
+            } else {
+                document.getElementById("passwordError").style.display = "none";
+            }
+
+            // Compare passwords
+            if (password !== confirm_password) {
+                alert("Passwords do not match");
+                return;
+            }
 
             // Make an HTTP POST request to the server
             fetch("http://localhost:8000/api/auth/register", {
@@ -46,18 +80,24 @@
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    firstname,
+                    lastname,
+                    email,
+                    password,
+
+                })
             })
-            .then(response => response.json())
-            .then(data => {
-                // Handle the response from the server
-                console.log(data);
-                // Optionally, you can redirect the user to another page or show a success message
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                // Handle errors, such as showing an error message to the user
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // Handle the response from the server
+                    console.log(data);
+                    // Optionally, you can redirect the user to another page or show a success message
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    // Handle errors, such as showing an error message to the user
+                });
         });
     </script>
 </body>
