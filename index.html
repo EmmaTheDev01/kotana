@@ -11,9 +11,9 @@
 <body>
     <div class="login">
         <div class="form-box">
-            <form>
-                <input type="email" name="email" placeholder="Enter your email" />
-                <input type="password" name="password" placeholder="Enter your password" />
+            <form id="loginForm">
+                <input type="email" name="email" id="email" placeholder="Enter your email" />
+                <input type="password" name="password" id="password" placeholder="Enter your password" />
                 <div class="check">
                     <input type="checkbox" class="checkbox" />
                     <span>Agree to our terms and conditions</span>
@@ -27,6 +27,38 @@
         </div>
         <a class="skip" href="guide.html">Skip Login</a>
     </div>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('http://localhost:8000/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        password: password
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Login failed');
+                }
+
+                const data = await response.json();
+                console.log(data); // Log response from the backend
+                // Redirect or perform any necessary actions upon successful login
+            } catch (error) {
+                console.error(error);
+                // Handle login failure, display error message, etc.
+            }
+        });
+    </script>
 </body>
 
 </html>
