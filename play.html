@@ -2,124 +2,171 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="swiper-bundle.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styles.css" />
-  <title>Kotana Game - play single player or multiple player.</title>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="swiper-bundle.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <title>Kotana Game - play single player or multiple player.</title>
 </head>
 
 <body>
-  <div class="game">
-    <nav class="navbar">
-      <ul>
-        <li id="user">
-          <i class="fa fa-user" aria-hidden="true"></i>
-        </li>
-        <li id="score">Score: <span class="score_number">0</span></li>
-        <li id="timer">00:00</li>
-        <li class="level">Level: <span id="game_level"> 0</span> </li>
-      </ul>
-    </nav>
-    <div class="menu hidden">
-      <ul>
-        <li class="menu-item" id="user_name">Username</li>
-        <li class="menu-item" id="multiplayer">Multiple player</li>
-        <li class="menu-item" id="top_score">Top score</li>
-        <li class="menu-item" id="logout">Logout</li>
-      </ul>
-    </div>
-    <div class="default-card">
-      <img src="/cards/1.png" id="default_card" alt="" />
-    </div>
-    <div class="success hidden">
-      <h1 class="scored">Good Job!</h1>
-    </div>
-    <div class="fail hidden">
-      <h1 class="failed">Try Again</h1>
-    </div>
-    <div class="loading-spinner"></div>
-    <div class="description">
-      <h3 class="description-heading">Description:</h3>
-      <h3 class="hint-heading">Hint:</h3>
-    </div>
-    <div class="shuffle-btn">
-      <button id="shuffle">Shuffle</button>
-    </div>
-    <div class="announcers hidden">
-      <div class="timeout">
-        <span class="timeout_text hidden">Timeout</span>
-      </div>
-    </div>
-    <div class="slide-container swiper hidden">
-      <div class="slide-content">
-        <div class="card-wrapper swiper-wrapper">
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
-
-
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
-
-          <div class="card swiper-slide">
-            <div class="card-image">
-              <img src="/cards/1.png" class="card-img" alt="card image" />
-            </div>
-          </div>
+    <div class="game">
+        <nav class="navbar">
+            <ul>
+                <li id="user">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                </li>
+                <li id="score">Score: <span class="score_number">0</span></li>
+                <li id="timer">00:00</li>
+                <li class="level">Level: <span id="game_level"> 0</span> </li>
+            </ul>
+        </nav>
+        <div class="menu hidden">
+            <ul>
+                <li class="menu-item" id="user_name">Username</li>
+                <li class="menu-item" id="multiplayer">Multiple player</li>
+                <li class="menu-item" id="top_score">Top score</li>
+                <li class="menu-item" id="logout">Logout</li>
+            </ul>
         </div>
-      </div>
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-      <div class="swiper-pagination"></div>
+        <div class="default-card">
+            <img src="/cards/1.png" id="default_card" alt="" />
+        </div>
+        <div class="success hidden">
+            <h1 class="scored">Good Job!</h1>
+        </div>
+        <div class="fail hidden">
+            <h1 class="failed">Try Again</h1>
+        </div>
+        <div class="loading-spinner"></div>
+        <div class="description">
+            <h3 class="description-heading">Description:</h3>
+            <h3 class="hint-heading">Hint:</h3>
+        </div>
+        <div class="shuffle-btn">
+            <button id="shuffle">Shuffle</button>
+        </div>
+        <div class="announcers hidden">
+            <div class="timeout">
+                <span class="timeout_text hidden">Timeout</span>
+            </div>
+        </div>
+        <div class="slide-container swiper hidden">
+            <div class="slide-content">
+                <div class="card-wrapper swiper-wrapper">
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+
+                    <div class="card swiper-slide">
+                        <div class="card-image">
+                            <img src="/cards/1.png" class="card-img" alt="card image" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <audio id="scoreSound">
+            <source src="/audio/score.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio id="failSound">
+            <source src="/audio/fail.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio id="timeoutSound">
+            <source src="/audio/timeout.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <audio id="levelUpSound">
+            <source src="/audio/levelup.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+        <script src="swiper-bundle.min.js"></script>
+        <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"
+            integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ"
+            crossorigin="anonymous"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                // Retrieve user details function
+                function getUserDetails() {
+                    // Retrieve authentication token from storage
+                    const authToken = localStorage.getItem("authToken");
+
+                    // Make an HTTP GET request to retrieve user details
+                    fetch("http://localhost:8000/api/user", {
+                        method: "GET",
+                        headers: {
+                            "Authorization": "Bearer " + authToken, // Include the authentication token
+                            "Content-Type": "application/json"
+                        }
+                    })
+                        .then(response => response.json())
+                        .then(user => {
+                            // Update the UI with user details
+                            const usernameElement = document.getElementById("user_name");
+                            usernameElement.innerText = user.username;
+
+                            // Show the menu after user details are retrieved
+                            const menu = document.querySelector(".menu");
+                            menu.classList.remove("hidden");
+                        })
+                        .catch(error => {
+                            console.error("Error:", error);
+                            // Handle errors, such as showing an error message to the user
+                        });
+                }
+
+                // Logout function
+                function logout() {
+                    // Clear any stored user data, e.g., remove authentication token from localStorage
+                    localStorage.removeItem("authToken");
+
+                    // Redirect the user to the login page
+                    window.location.href = "index.html";
+                }
+
+                // Call getUserDetails function when the page loads
+                getUserDetails();
+
+                // Add click event listener to logout button
+                const logoutButton = document.getElementById("logout");
+                logoutButton.addEventListener("click", logout);
+            });
+        </script>
     </div>
-    <audio id="scoreSound">
-      <source src="/audio/score.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-
-    <audio id="failSound">
-      <source src="/audio/fail.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-
-    <audio id="timeoutSound">
-      <source src="/audio/timeout.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-
-    <audio id="levelUpSound">
-      <source src="/audio/levelup.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-    </audio>
-    <script src="swiper-bundle.min.js"></script>
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"
-      integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ"
-      crossorigin="anonymous"></script>
-
 </body>
 
 </html>
