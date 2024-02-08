@@ -59,10 +59,11 @@
 
                 const data = await response.json();
                 console.log(data); // Log response from the backend
-                // Redirect or perform any necessary actions upon successful login
+                // Redirecting to the guide page
+                window.location.href = 'guide.html';
             } catch (error) {
                 console.error(error);
-                // Handle login failure, display error message, etc.
+                alert('Login failed');
             }
         });
     </script>

@@ -90,13 +90,16 @@
             })
                 .then(response => response.json())
                 .then(data => {
-                    // Handle the response from the server
+                    // Handling the response from the server
                     console.log(data);
-                    // Optionally, you can redirect the user to another page or show a success message
+
+                    // Redirecting to the login page
+                    window.location.href = "index.html";
+
                 })
                 .catch(error => {
                     console.error("Error:", error);
-                    // Handle errors, such as showing an error message to the user
+                    alert("Registration failed");
                 });
         });
     </script>
