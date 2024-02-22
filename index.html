@@ -59,8 +59,13 @@
 
                 const data = await response.json();
                 console.log(data); // Log response from the backend
+
+                // Save the access token to local storage
+                localStorage.setItem('accessToken', data.token);
+                console.log('Access token saved to local storage', data.token);
+
                 // Redirecting to the guide page
-                window.location.href = 'guide.html';
+                window.location.href = 'multiplayers.html';
             } catch (error) {
                 console.error(error);
                 alert('Login failed');

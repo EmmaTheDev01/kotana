@@ -25,7 +25,9 @@
         <div class="menu hidden">
             <ul>
                 <li class="menu-item" id="user_name">Username</li>
-                <li class="menu-item" id="multiplayer">Multiple player</li>
+                <a href="multiplayers.html">
+                    <li class="menu-item" id="multiplayer">Multiple player</li>
+                </a>
                 <li class="menu-item" id="top_score">Top score</li>
                 <li class="menu-item" id="logout">Logout</li>
             </ul>
@@ -119,46 +121,46 @@
             crossorigin="anonymous"></script>
 
         <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                // Retrieve user details function
-                function getUserDetails() {
-                    // Retrieve authentication token from storage
-                    const authToken = localStorage.getItem("authToken");
 
-                    // Make an HTTP GET request to retrieve user details
-                    fetch("http://localhost:8000/api/user", {
-                        method: "GET",
-                        headers: {
-                            "Authorization": "Bearer " + authToken, // Include the authentication token
-                            "Content-Type": "application/json"
+            function getUserDetails() {
+                const authToken = localStorage.getItem("authToken");
+
+                fetch('http://localhost:8000/api/user/', {
+                    method: 'GET',
+                    credentials: 'include', // Include cookies in the request
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                    },
+                })
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        } else {
+                            throw new Error('Failed to fetch user details');
                         }
                     })
-                        .then(response => response.json())
-                        .then(user => {
-                            // Update the UI with user details
-                            const usernameElement = document.getElementById("user_name");
-                            usernameElement.innerText = user.username;
+                    .then(data => {
+                        const usernameElement = document.getElementById("user_name");
+                        usernameElement.textContent = data.lastname || "Guest";
+                        console.log(data);
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                    });
+            }
 
-                            // Show the menu after user details are retrieved
-                            const menu = document.querySelector(".menu");
-                            menu.classList.remove("hidden");
-                        })
-                        .catch(error => {
-                            console.error("Error:", error);
-                            // Handle errors, such as showing an error message to the user
-                        });
-                }
+            // Logout function
+            function logout() {
+                // Clear any stored user data, e.g., remove authentication token from localStorage
+                localStorage.removeItem("authToken");
+                sessionStorage.removeItem("score");
 
-                // Logout function
-                function logout() {
-                    // Clear any stored user data, e.g., remove authentication token from localStorage
-                    localStorage.removeItem("authToken");
+                // Redirect the user to the login page
+                window.location.href = "index.html";
+            }
 
-                    // Redirect the user to the login page
-                    window.location.href = "index.html";
-                }
-
-                // Call getUserDetails function when the page loads
+            // Call getUserDetails function when the page loads
+            document.addEventListener("DOMContentLoaded", function () {
                 getUserDetails();
 
                 // Add click event listener to logout button

@@ -12,6 +12,7 @@
 </head>
 
 <body>
+  <div class="overlay"></div>
   <div class="game">
     <nav class="navbar">
       <ul>
@@ -26,7 +27,9 @@
     <div class="menu hidden">
       <ul>
         <li class="menu-item" id="user_name">Username</li>
-        <li class="menu-item" id="multiplayer">Single player</li>
+        <a href="play.html">
+          <li class="menu-item" id="multiplayer">Single player</li>
+        </a>
         <li class="menu-item" id="top_score">Top score</li>
         <li class="menu-item" id="logout">Logout</li>
       </ul>
@@ -34,6 +37,25 @@
     <div class="default-card">
       <img src="/cards/1.png" id="default_card" alt="" />
     </div>
+    <!-- SEARCH USER MODAL -->
+    <div class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3 class="modal-text">View all online players</h3>
+        <ol id="onlineUsers">
+          
+        </ol>
+        <div class="search-users">
+          <button id="searchButton">Search</button>
+        </div>
+        <!-- Display online users -->
+        <div class="online-users">
+          <ul id="onlineUsersList"></ul>
+        </div>
+
+      </div>
+    </div>
+    <!-- ALERTS OF FAIL OR SUCCESS -->
     <div class="success hidden">
       <h1 class="scored">Good Job!</h1>
     </div>
@@ -119,6 +141,54 @@
     <script src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"
       integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ"
       crossorigin="anonymous"></script>
+    <script>
+      function getUserDetails() {
+        const accessToken = localStorage.getItem("accessToken");
+
+        fetch('http://localhost:8000/api/user/', {
+          method: 'GET',
+          credentials: 'include', // Include cookies in the request
+          headers: {
+            'Authorization': 'Bearer ' + authToken,
+          },
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Failed to fetch user details');
+            }
+          })
+          .then(data => {
+            const usernameElement = document.getElementById("user_name");
+            usernameElement.textContent = data.lastname || "Guest";
+            console.log(data);
+          })
+          .catch(error => {
+            console.error('Fetch error:', error);
+          });
+      }
+
+      // Logout function
+      function logout() {
+        // Clear any stored user data, e.g., remove authentication token from localStorage
+        localStorage.removeItem("aceessToken");
+        sessionStorage.removeItem("score");
+
+        // Redirect the user to the login page
+        window.location.href = "index.html";
+      }
+
+      // Call getUserDetails function when the page loads
+      document.addEventListener("DOMContentLoaded", function () {
+       
+        searchOnlineUsers();
+
+        // Add click event listener to logout button
+        const logoutButton = document.getElementById("logout");
+        logoutButton.addEventListener("click", logout);
+      });
+    </script>
 
 </body>
 

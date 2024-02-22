@@ -46,7 +46,9 @@ const defaultCard = document.querySelector("#default_card");
 const SliderContainer = document.querySelector(".slide-container");
 const menu = document.querySelector(".menu");
 const menu_item = document.querySelector(".menu-item");
-
+const modal = document.querySelector(".modal");
+const close = document.querySelector(".close");
+const overlay = document.querySelector(".overlay");
 
 //Audio sounds
 const scoreSound = document.getElementById('scoreSound');
@@ -70,7 +72,15 @@ const announcers = document.querySelector('.announcers');
 const timeout_text = document.querySelector('.timeout_text');
 const level_txt = document.querySelector('.level_txt');
 const level_number = document.querySelector('#level_number');
-
+//Modal hiding and displaying
+close.addEventListener('click', () => {
+  if (modal.classList.contains('hidden')) {
+    modal.classList.remove('hidden');
+  } else {
+    modal.classList.add('hidden');
+    overlay.classList.add('hidden');
+  }
+})
 //Menu display
 user.addEventListener('click', () => {
   if (menu.classList.contains('hidden')) {
@@ -92,6 +102,42 @@ let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
+
+//Fetching all online users 
+
+// Add an event listener to the search button
+const searchButton = document.getElementById("searchButton");
+searchButton.addEventListener("click", searchOnlineUsers);
+
+// Function to search for online users
+function searchOnlineUsers() {
+  fetch("http://localhost:8000/api/user/online", {
+    method: "GET",
+    headers: {
+      "Authorization": "Bearer ", // Include the authentication token if required
+      "Content-Type": "application/json"
+    }
+  })
+    .then(response => response.json())
+    .then(users => {
+      // Process the list of online users returned by the server
+      console.log("Online users:", users);
+      const onlineusers = document.querySelector("#onlineusers");
+      users.forEach(user => {
+        const listItem = document.createElement("li");
+        listItem.textContent = user.username; // Assuming user object has a 'username' property
+        onlineusers.appendChild(listItem);
+      });
+
+      // You can handle the list of online users here, such as displaying them in the UI
+    })
+    .catch(error => {
+      console.error("Error searching online users:", error);
+      // Handle errors, such as displaying an error message to the user
+    });
+}
+
+
 
 function stopCountDown() {
   clearInterval(countdownInterval);
@@ -165,8 +211,6 @@ shuffleButton.addEventListener("click", () => {
   // Fetch data from JSON file
   fetchDataAndDisplay();
 });
-
-
 // Function to fetch data from JSON file and display
 async function fetchDataAndDisplay() {
   try {
