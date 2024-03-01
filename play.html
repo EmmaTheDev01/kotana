@@ -129,7 +129,7 @@
                     method: 'GET',
                     credentials: 'include', // Include cookies in the request
                     headers: {
-                        'Authorization': 'Bearer ' + authToken,
+                        'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
                     },
                 })
                     .then(response => {
@@ -152,7 +152,7 @@
             // Logout function
             function logout() {
                 // Clear any stored user data, e.g., remove authentication token from localStorage
-                localStorage.removeItem("authToken");
+                localStorage.removeItem("accessToken");
                 sessionStorage.removeItem("score");
 
                 // Redirect the user to the login page

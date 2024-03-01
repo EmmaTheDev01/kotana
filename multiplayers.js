@@ -1,3 +1,5 @@
+// Define player1Turn variable
+let player1Turn = true;
 
 //SLIDER
 var swiper = new Swiper(".slide-content", {
@@ -49,7 +51,7 @@ const menu_item = document.querySelector(".menu-item");
 const modal = document.querySelector(".modal");
 const close = document.querySelector(".close");
 const overlay = document.querySelector(".overlay");
-
+const playeTwo_score = document.querySelector('#player2_score');
 //Audio sounds
 const scoreSound = document.getElementById('scoreSound');
 const failSound = document.getElementById('failSound');
@@ -64,9 +66,11 @@ const nextButton = document.getElementById("next");
 const success = document.querySelector('.success');
 const fail = document.querySelector('.fail')
 //Score declaration
-let score = sessionStorage.getItem("score") || 0;
+let player1Score = sessionStorage.getItem("player1Score") || 0;
+let player2Score = sessionStorage.getItem("player2Score") || 0;
 const scoreText = document.querySelector('#score');
-scoreText.textContent = score;
+scoreText.textContent = `My score: ${player1Score}`;
+playeTwo_score.textContent = `${player2Score}`;
 //Ingame alerts
 const announcers = document.querySelector('.announcers');
 const timeout_text = document.querySelector('.timeout_text');
@@ -101,43 +105,44 @@ menu_item.addEventListener('click', () => {
 let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
-}
-
-//Fetching all online users 
-
-// Add an event listener to the search button
-const searchButton = document.getElementById("searchButton");
-searchButton.addEventListener("click", searchOnlineUsers);
-
+}//Fetching all online users 
 // Function to search for online users
-function searchOnlineUsers() {
-  fetch("http://localhost:8000/api/user/online", {
-    method: "GET",
-    headers: {
-      "Authorization": "Bearer ", // Include the authentication token if required
-      "Content-Type": "application/json"
-    }
-  })
-    .then(response => response.json())
-    .then(users => {
-      // Process the list of online users returned by the server
-      console.log("Online users:", users);
-      const onlineusers = document.querySelector("#onlineusers");
-      users.forEach(user => {
-        const listItem = document.createElement("li");
-        listItem.textContent = user.username; // Assuming user object has a 'username' property
-        onlineusers.appendChild(listItem);
-      });
-
-      // You can handle the list of online users here, such as displaying them in the UI
-    })
-    .catch(error => {
-      console.error("Error searching online users:", error);
-      // Handle errors, such as displaying an error message to the user
+async function searchOnlineUsers() {
+  try {
+    // Fetch online users from the API endpoint
+    const response = await fetch("http://localhost:8000/api/user/online", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
+
+    // Check if the response is successful
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    // Process the object of online users returned by the server
+    const responseData = await response.json();
+    const data = responseData.data;
+    console.log("Online users:", data);
+
+    const onlineusersList = document.querySelector("#onlineUsersList");
+
+    // Iterate over the array of users and display user information
+    data.forEach(user => {
+      const name = user.firstname + " " + user.lastname;
+      const listItem = document.createElement("li");
+      listItem.textContent = name;
+      onlineusersList.appendChild(listItem);
+    });
+
+    // You can handle the list of online users here, such as displaying them in the UI
+  } catch (error) {
+    console.error("Error searching online users:", error);
+    // Handle errors, such as displaying an error message to the user
+  }
 }
-
-
 
 function stopCountDown() {
   clearInterval(countdownInterval);
@@ -294,10 +299,10 @@ function displaySlider(images) {
     //Clicking the image to play the game.
     // Add a new level variable
     let level = 1
-    console.log("score: ", score)
+    console.log("score: ", player1Score)
     // Function to check and update the level
     function checkLevel() {
-      if (score <= 10) {
+      if (player1Score <= 10) {
         // Set the level
         level = 1;
         // Update any UI elements or perform actions related to level change
@@ -305,7 +310,7 @@ function displaySlider(images) {
         startingSeconds = level_one;
         game_level.textContent = level
         levelUpSound.play();
-      } else if (score >= 20 && score < 30) {
+      } else if (player1Score >= 20 && player1Score < 30) {
         // Increase the level to 3
         level = 2;
         // Update any UI elements or perform actions related to level change
@@ -315,7 +320,7 @@ function displaySlider(images) {
         startingSeconds = level_two;
         levelUpSound.play();
       }
-      else if (score >= 30 && score < 40) {
+      else if (player1Score >= 30 && player1Score < 40) {
         // Increase the level to 3
         level = 3;
 
@@ -326,7 +331,7 @@ function displaySlider(images) {
         startingSeconds = level_three;
         levelUpSound.play();
       }
-      else if (score >= 40 && score < 45) {
+      else if (player1Score >= 40 && player1Score < 45) {
         // Increase the level to 3
         level = 4;
         // Update any UI elements or perform actions related to level change
@@ -336,7 +341,7 @@ function displaySlider(images) {
         startingSeconds = level_four;
         levelUpSound.play();
       }
-      else if (score >= 45) {
+      else if (player1Score >= 45) {
         // Increase the level to 3
         level = 5;
         // Update any UI elements or perform actions related to level change
@@ -367,20 +372,36 @@ function displaySlider(images) {
         // Check if the clicked image's alt is equal to the current card's description
         if (clickedAlt.trim() === `card ${currentCard.trim()}`) {
           // Increment the score
-          score++;
-          scoreText.textContent = `score: ${score}`;
-          success.classList.remove('hidden');
-          // Save the updated score to localStorage
-          sessionStorage.setItem("score", score);
-          scoreSound.play(); // Play the score sound effect
-          // Reset the timer to starting seconds
-          time = startingSeconds;
-          localStorage.setItem("savedTime", time);
-          setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
-          stopCountDown();
+          if (player1Turn) {
+            player1Score++;
+          } else {
+            player2Score++;
+          }
+
+          // Check for winner
+          if (player1Score >= 5) {
+            alert("Player 1 wins!");
+          } else if (player2Score >= 5) {
+            alert("Player 2 wins!");
+          } else {
+            // Update score display
+            scoreText.textContent = `My Score: ${player1Score}`;
+            playeTwo_score.textContent = `${player2Score}`;
+            // Continue game
+            success.classList.remove('hidden');
+            scoreSound.play(); // Play the score sound effect
+            // Reset the timer to starting seconds
+            time = startingSeconds;
+            localStorage.setItem("savedTime", time);
+            setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
+            stopCountDown();
+          }
         } else {
           fail.classList.remove('hidden');
           failSound.play();
+
+          // Switch player if first player fails
+          player1Turn = !player1Turn;
         }
       }
 
@@ -403,3 +424,20 @@ function displaySlider(images) {
 
 }
 
+function incrementScore() {
+  // Increment the score of the current player
+  if (player1Score >= 5 || player2Score >= 5) {
+    return; // Stop incrementing if a player has already won
+  }
+
+  if (player1Turn) {
+    player1Score++;
+  } else {
+    player2Score++;
+  }
+}
+
+function switchPlayer() {
+  // Switch player if first player fails
+  player1Turn = !player1Turn;
+}

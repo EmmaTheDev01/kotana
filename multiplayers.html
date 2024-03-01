@@ -19,6 +19,9 @@
         <li id="user">
           <i class="fa fa-user" aria-hidden="true"></i>
         </li>
+        <li class="opponent"><i class="fa fa-user" aria-hidden="true"></i>
+          <span id="player2_score"></span>
+        </li>
         <li id="score">Score: <span class="score_number">0</span></li>
         <li id="timer">00:00</li>
         <li class="level">Level: <span id="game_level"> 0</span> </li>
@@ -35,22 +38,20 @@
       </ul>
     </div>
     <div class="default-card">
-      <img src="/cards/1.png" id="default_card" alt="" />
+      <img src="/cards/1.png" id="default_card" alt="default" />
     </div>
     <!-- SEARCH USER MODAL -->
     <div class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h3 class="modal-text">View all online players</h3>
-        <ol id="onlineUsers">
-          
-        </ol>
-        <div class="search-users">
-          <button id="searchButton">Search</button>
-        </div>
+
         <!-- Display online users -->
-        <div class="online-users">
-          <ul id="onlineUsersList"></ul>
+        <div class="online-users" id="onlineUsers">
+          <ol id="onlineUsersList">
+
+          </ol>
+          <p class="modal_footer">Here is the list of all online users. Click on a user to send a signal.</p>
         </div>
 
       </div>
@@ -142,14 +143,15 @@
       integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ"
       crossorigin="anonymous"></script>
     <script>
+      const accessToken = localStorage.getItem("accessToken");
       function getUserDetails() {
         const accessToken = localStorage.getItem("accessToken");
 
         fetch('http://localhost:8000/api/user/', {
           method: 'GET',
-          credentials: 'include', // Include cookies in the request
+          credentials: 'include',
           headers: {
-            'Authorization': 'Bearer ' + authToken,
+            'Authorization': 'Bearer ' + accessToken,
           },
         })
           .then(response => {
@@ -171,18 +173,42 @@
 
       // Logout function
       function logout() {
-        // Clear any stored user data, e.g., remove authentication token from localStorage
-        localStorage.removeItem("aceessToken");
-        sessionStorage.removeItem("score");
+        // Make a request to update user's online status to false
+        fetch('http://localhost:8000/api/user/online/remove', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + accessToken,
+          },
+          credentials: 'include', // Include cookies in the request
+          body: JSON.stringify({ online: false }), // Send the JSON in the request body
+        })
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            } else {
+              throw new Error('Failed to update online status');
+            }
+          })
+          .then(data => {
+            // Clear any stored user data, e.g., remove authentication token from localStorage
+            localStorage.removeItem('accessToken');
+            sessionStorage.removeItem('score');
 
-        // Redirect the user to the login page
-        window.location.href = "index.html";
+            // Redirect the user to the login page
+            window.location.href = 'index.html';
+          })
+          .catch(error => {
+            console.error('Fetch error:', error);
+          });
       }
+
 
       // Call getUserDetails function when the page loads
       document.addEventListener("DOMContentLoaded", function () {
-       
+
         searchOnlineUsers();
+        getUserDetails
 
         // Add click event listener to logout button
         const logoutButton = document.getElementById("logout");
