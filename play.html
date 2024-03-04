@@ -19,12 +19,12 @@
                 </li>
                 <li id="score">Score: <span class="score_number">0</span></li>
                 <li id="timer">00:00</li>
-                <li class="level">Level: <span id="game_level"> 0</span> </li>
+                <li class="level">Level<span id="game_level"> 0</span> </li>
             </ul>
         </nav>
         <div class="menu hidden">
             <ul>
-                <li class="menu-item" id="user_name">Username</li>
+                <li class="menu-item" id="usernameElement"></li>
                 <a href="multiplayers.html">
                     <li class="menu-item" id="multiplayer">Multiple player</li>
                 </a>
@@ -121,40 +121,13 @@
             crossorigin="anonymous"></script>
 
         <script>
-
-            function getUserDetails() {
-                const authToken = localStorage.getItem("authToken");
-
-                fetch('http://localhost:8000/api/user/', {
-                    method: 'GET',
-                    credentials: 'include', // Include cookies in the request
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("accessToken"),
-                    },
-                })
-                    .then(response => {
-                        if (response.ok) {
-                            return response.json();
-                        } else {
-                            throw new Error('Failed to fetch user details');
-                        }
-                    })
-                    .then(data => {
-                        const usernameElement = document.getElementById("user_name");
-                        usernameElement.textContent = data.lastname || "Guest";
-                        console.log(data);
-                    })
-                    .catch(error => {
-                        console.error('Fetch error:', error);
-                    });
-            }
-
+            const usernameElement = document.getElementById('usernameElement');
+            usernameElement.textContent = localStorage.getItem('username') || 'Anonymous';
             // Logout function
             function logout() {
                 // Clear any stored user data, e.g., remove authentication token from localStorage
                 localStorage.removeItem("accessToken");
                 sessionStorage.removeItem("score");
-
                 // Redirect the user to the login page
                 window.location.href = "index.html";
             }

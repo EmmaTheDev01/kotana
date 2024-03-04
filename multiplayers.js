@@ -69,7 +69,7 @@ const fail = document.querySelector('.fail')
 let player1Score = sessionStorage.getItem("player1Score") || 0;
 let player2Score = sessionStorage.getItem("player2Score") || 0;
 const scoreText = document.querySelector('#score');
-scoreText.textContent = `My score: ${player1Score}`;
+scoreText.textContent = `Score: ${player1Score}`;
 playeTwo_score.textContent = `${player2Score}`;
 //Ingame alerts
 const announcers = document.querySelector('.announcers');
@@ -101,6 +101,9 @@ menu_item.addEventListener('click', () => {
     menu.classList.remove('hidden');
   }
 })
+defaultCard.addEventListener("click", () => {
+  menu.classList.add('hidden');
+})
 //Timer
 let currentIndex = 0;
 function startCountDown() {
@@ -108,40 +111,44 @@ function startCountDown() {
 }//Fetching all online users 
 // Function to search for online users
 async function searchOnlineUsers() {
-  try {
-    // Fetch online users from the API endpoint
-    const response = await fetch("http://localhost:8000/api/user/online", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    try {
+      // Fetch online users from the API endpoint
+      const response = await fetch("http://localhost:8000/api/user/online", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    });
 
-    // Check if the response is successful
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
+      // Process the object of online users returned by the server
+      const responseData = await response.json();
+      const data = responseData.data;
+      console.log("Online users:", data);
+
+      const onlineusersList = document.querySelector("#onlineUsersList");
+
+      // Iterate over the array of users and display user information
+      data.forEach(user => {
+        const name = user.firstname + " " + user.lastname;
+        const listItem = document.createElement("li");
+        listItem.textContent = name;
+        onlineusersList.appendChild(listItem);
+      });
+
+      // You can handle the list of online users here, such as displaying them in the UI
+    } catch (error) {
+      console.error("Error searching online users:", error);
+      // Handle errors, such as displaying an error message to the user
     }
-
-    // Process the object of online users returned by the server
-    const responseData = await response.json();
-    const data = responseData.data;
-    console.log("Online users:", data);
-
-    const onlineusersList = document.querySelector("#onlineUsersList");
-
-    // Iterate over the array of users and display user information
-    data.forEach(user => {
-      const name = user.firstname + " " + user.lastname;
-      const listItem = document.createElement("li");
-      listItem.textContent = name;
-      onlineusersList.appendChild(listItem);
-    });
-
-    // You can handle the list of online users here, such as displaying them in the UI
-  } catch (error) {
-    console.error("Error searching online users:", error);
-    // Handle errors, such as displaying an error message to the user
   }
+
 }
 
 function stopCountDown() {
@@ -200,6 +207,7 @@ function setDefaultCard(cardData) {
 }
 // Event listener for the shuffle button
 shuffleButton.addEventListener("click", () => {
+  menu.classList.add('hidden');
   announcers.classList.add('hidden');
   SliderContainer.style.display = "block";
   setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
@@ -385,7 +393,7 @@ function displaySlider(images) {
             alert("Player 2 wins!");
           } else {
             // Update score display
-            scoreText.textContent = `My Score: ${player1Score}`;
+            scoreText.textContent = `Score: ${player1Score}`;
             playeTwo_score.textContent = `${player2Score}`;
             // Continue game
             success.classList.remove('hidden');

@@ -430,7 +430,10 @@ font-size: 1.3rem;
 
 @media screen and (max-width: 900px) {
   .menu{
-    display: none;
+    left: 60%;
+    border-radius: 0px 0px 10px 10px;
+    backdrop-filter: blur(10px);
+    opacity: .9;
   }
   .announcers {
     display: flex;

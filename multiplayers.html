@@ -24,12 +24,12 @@
         </li>
         <li id="score">Score: <span class="score_number">0</span></li>
         <li id="timer">00:00</li>
-        <li class="level">Level: <span id="game_level"> 0</span> </li>
+        <li class="level">⭐ <span id="game_level"> 0</span> </li>
       </ul>
     </nav>
     <div class="menu hidden">
       <ul>
-        <li class="menu-item" id="user_name">Username</li>
+        <li class="menu-item" id="usernameElement"></li>
         <a href="play.html">
           <li class="menu-item" id="multiplayer">Single player</li>
         </a>
@@ -143,38 +143,34 @@
       integrity="sha384-GLhlTQ8iK1uUYS9eAtP6LsOdEJuoG8hZ1oT01wbp5eQlmh/jz1Q+YF8l5P+J1mJJ"
       crossorigin="anonymous"></script>
     <script>
-      const accessToken = localStorage.getItem("accessToken");
-      function getUserDetails() {
-        const accessToken = localStorage.getItem("accessToken");
+      //Show username in user menu
+      const usernameElement = document.getElementById('usernameElement');
+      usernameElement.textContent = localStorage.getItem('username') || 'Anonymous';
 
-        fetch('http://localhost:8000/api/user/', {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Authorization': 'Bearer ' + accessToken,
-          },
-        })
-          .then(response => {
-            if (response.ok) {
-              return response.json();
-            } else {
-              throw new Error('Failed to fetch user details');
-            }
-          })
-          .then(data => {
-            const usernameElement = document.getElementById("user_name");
-            usernameElement.textContent = data.lastname || "Guest";
-            console.log(data);
-          })
-          .catch(error => {
-            console.error('Fetch error:', error);
-          });
-      }
 
       // Logout function
       function logout() {
+        localStorage.removeItem('username');
+        localStorage.removeItem('accessToken');
+        // Redirect the user to the login page
+        window.location.href = 'index.html';
+        // Retrieve the access token from the cookie
+        const cookies = document.cookie.split(';');
+        let accessToken = null;
+        for (let cookie of cookies) {
+          const parts = cookie.split('=');
+          if (parts[0].trim() === 'accessToken') {
+            accessToken = parts[1];
+            break;
+          }
+        }
+        if (!accessToken) {
+          console.error('Access token not found in cookie');
+          return;
+        }
+
         // Make a request to update user's online status to false
-        fetch('http://localhost:8000/api/user/online/remove', {
+        fetch('http://localhost:8000/api/user/online/reset', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
@@ -191,12 +187,8 @@
             }
           })
           .then(data => {
-            // Clear any stored user data, e.g., remove authentication token from localStorage
-            localStorage.removeItem('accessToken');
-            sessionStorage.removeItem('score');
+            console.log(data);
 
-            // Redirect the user to the login page
-            window.location.href = 'index.html';
           })
           .catch(error => {
             console.error('Fetch error:', error);
@@ -204,11 +196,12 @@
       }
 
 
+
       // Call getUserDetails function when the page loads
       document.addEventListener("DOMContentLoaded", function () {
 
         searchOnlineUsers();
-        getUserDetails
+
 
         // Add click event listener to logout button
         const logoutButton = document.getElementById("logout");
