@@ -115,7 +115,7 @@ async function searchOnlineUsers() {
   if (accessToken) {
     try {
       // Fetch online users from the API endpoint
-      const response = await fetch("http://localhost:8000/api/user/online", {
+      const response = await fetch(window.env.API_URL + "/user/online", {
         method: "GET",
         headers: {
           "Content-Type": "application/json"
@@ -130,8 +130,6 @@ async function searchOnlineUsers() {
       // Process the object of online users returned by the server
       const responseData = await response.json();
       const data = responseData.data;
-      console.log("Online users:", data);
-
       const onlineusersList = document.querySelector("#onlineUsersList");
 
       // Iterate over the array of users and display user information
