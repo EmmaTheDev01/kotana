@@ -138,7 +138,10 @@ async function searchOnlineUsers() {
         const name = user.firstname + " " + user.lastname;
         const listItem = document.createElement("li");
         listItem.textContent = name;
+        listItem.style.cursor = "pointer";
+        listItem.style.padding = "5px";
         onlineusersList.appendChild(listItem);
+        
       });
 
       // You can handle the list of online users here, such as displaying them in the UI
