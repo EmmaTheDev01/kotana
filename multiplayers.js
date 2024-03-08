@@ -109,12 +109,14 @@ defaultCard.addEventListener("click", () => {
 let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
-}//Fetching all online users 
-// Function to search for online users
+}// Function to search for online users
 async function searchOnlineUsers() {
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
     try {
+      const loadingSpinner = document.querySelector('.l-spinner');
+      loadingSpinner.style.display = 'block'; // Show the loading spinner
+
       // Fetch online users from the API endpoint
       const response = await fetch(window.env.API_URL + "/user/online", {
         method: "GET",
@@ -144,14 +146,17 @@ async function searchOnlineUsers() {
         
       });
 
+      // Hide the loading spinner after fetching and displaying online users
+      loadingSpinner.style.display = 'none';
+
       // You can handle the list of online users here, such as displaying them in the UI
     } catch (error) {
       console.error("Error searching online users:", error);
       // Handle errors, such as displaying an error message to the user
     }
   }
-
 }
+
 
 function stopCountDown() {
   clearInterval(countdownInterval);
@@ -231,6 +236,7 @@ async function fetchDataAndDisplay() {
   try {
     const loadingSpinner = document.querySelector('.loading-spinner');
     loadingSpinner.style.display = 'block';
+    loadingSpinner.style.zIndex = '2';
 
     const response = await fetch("data.json");
     console.log("Response status:", response.status);
