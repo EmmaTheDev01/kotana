@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div id="loading" class="loading"></div>
     <div class="login">
         <div class="form-box">
             <form id="loginForm">
@@ -31,6 +32,8 @@
     <script>
         document.getElementById('loginForm').addEventListener('submit', async function (event) {
             event.preventDefault();
+            // Show the loading indicator
+            document.getElementById('loading').style.display = 'block';
 
             // Check if the checkbox is checked
             const agreeTerms = document.getElementById('termsCheckbox').checked;
