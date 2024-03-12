@@ -109,7 +109,8 @@ defaultCard.addEventListener("click", () => {
 let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
-}// Function to search for online users
+}
+// Function to search for online users
 async function searchOnlineUsers() {
   const accessToken = localStorage.getItem("accessToken");
   if (accessToken) {
@@ -121,7 +122,6 @@ async function searchOnlineUsers() {
       const response = await fetch(window.env.API_URL + "/game/available", {
         method: "GET",
         headers: {
-          'Authorization': 'Bearer ' + accessToken,
           'Content-Type': 'application/json'
         }
       });
