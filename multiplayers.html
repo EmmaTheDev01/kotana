@@ -149,7 +149,6 @@
       const usernameElement = document.getElementById('usernameElement');
       usernameElement.textContent = localStorage.getItem('username') || 'Anonymous';
 
-
       // Logout function
       function logout() {
         // Retrieve the access token from the local storage
@@ -164,7 +163,7 @@
           fetch(window.env.API_URL + '/online/reset', {
             method: 'PUT',
             headers: {
-              'Authorization': 'Bearer ' + accessToken,
+              'Authorization': 'Bearer ' + accessToken, // Include the access token in the headers
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({ online: false }),
@@ -177,8 +176,6 @@
               }
             })
             .then(data => {
-
-
               // Redirect the user to the login page
               window.location.href = 'index.html';
             })
@@ -193,7 +190,6 @@
           window.location.href = 'index.html';
         }
       }
-
 
 
 

@@ -118,10 +118,11 @@ async function searchOnlineUsers() {
       loadingSpinner.style.display = 'block'; // Show the loading spinner
 
       // Fetch online users from the API endpoint
-      const response = await fetch(window.env.API_URL + "/user/online", {
+      const response = await fetch(window.env.API_URL + "/game/available", {
         method: "GET",
         headers: {
-          "Content-Type": "application/json"
+          'Authorization': 'Bearer ' + accessToken,
+          'Content-Type': 'application/json'
         }
       });
 
@@ -143,16 +144,16 @@ async function searchOnlineUsers() {
         listItem.style.cursor = "pointer";
         listItem.style.padding = "5px";
         onlineusersList.appendChild(listItem);
-        
+
       });
 
       // Hide the loading spinner after fetching and displaying online users
       loadingSpinner.style.display = 'none';
 
-      // You can handle the list of online users here, such as displaying them in the UI
+      //Error handling 
     } catch (error) {
       console.error("Error searching online users:", error);
-      // Handle errors, such as displaying an error message to the user
+
     }
   }
 }
