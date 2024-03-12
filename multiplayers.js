@@ -119,7 +119,7 @@ async function searchOnlineUsers() {
       loadingSpinner.style.display = 'block'; // Show the loading spinner
 
       // Fetch online users from the API endpoint
-      const response = await fetch(window.env.API_URL + "/game/available", {
+      const response = await fetch(window.env.API_URL + "/user/online", {
         method: "GET",
         headers: {
           'Content-Type': 'application/json'
