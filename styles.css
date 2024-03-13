@@ -200,6 +200,10 @@ input {
   text-decoration: none;
   color: #85182a;
 }
+label{
+  display: block;
+  padding: 1rem;
+}
 
 .skip {
   float: right;
