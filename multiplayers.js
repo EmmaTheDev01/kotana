@@ -126,7 +126,6 @@ async function searchOnlineUsers() {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`
         }
       });
 
