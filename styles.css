@@ -129,15 +129,18 @@ a:hover {
   }
 
 }
-.logo-box{
- width: 180px;
- margin-left: auto;
- margin-right: auto;
+
+.logo-box {
+  width: 180px;
+  margin-left: auto;
+  margin-right: auto;
 }
-.logo-box img{
+
+.logo-box img {
   width: 160px;
   height: 100%;
 }
+
 input {
   display: block;
   width: 90%;
@@ -200,7 +203,8 @@ input {
   text-decoration: none;
   color: #85182a;
 }
-label{
+
+label {
   display: block;
   padding: 1rem;
 }
@@ -330,6 +334,7 @@ nav ul li {
   display: none;
   /* Initially hide the spinner */
 }
+
 .loading {
   display: none;
   position: absolute;
@@ -347,11 +352,11 @@ nav ul li {
 
 @keyframes spin {
   0% {
-      transform: rotate(0deg);
+    transform: rotate(0deg);
   }
 
   100% {
-      transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }
 
