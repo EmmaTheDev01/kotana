@@ -130,9 +130,9 @@ a:hover {
 
 }
 .logo-box{
- display: flex;
- justify-content: center;
- align-items: center;
+ width: 180px;
+ margin-left: auto;
+ margin-right: auto;
 }
 .logo-box img{
   width: 160px;
@@ -335,7 +335,7 @@ nav ul li {
   position: absolute;
   z-index: 100;
   top: 50%;
-  left: 50%;
+  left: 47%;
   transform: translate(-50%, -50%);
   width: 50px;
   height: 50px;

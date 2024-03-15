@@ -112,7 +112,10 @@ function startCountDown() {
 }
 // Function to search for online users
 async function searchOnlineUsers() {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('accessToken='))
+    ?.split('=')[1];
   if (accessToken) {
     try {
       const loadingSpinner = document.querySelector('.l-spinner');
@@ -122,7 +125,8 @@ async function searchOnlineUsers() {
       const response = await fetch(window.env.API_URL + "/game/available", {
         method: "GET",
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
         }
       });
 
@@ -134,6 +138,7 @@ async function searchOnlineUsers() {
       // Process the object of online users returned by the server
       const responseData = await response.json();
       const data = responseData.data;
+      console.log(data)
       const onlineusersList = document.querySelector("#onlineUsersList");
 
       // Iterate over the array of users and display user information
@@ -144,19 +149,18 @@ async function searchOnlineUsers() {
         listItem.style.cursor = "pointer";
         listItem.style.padding = "5px";
         onlineusersList.appendChild(listItem);
-
       });
 
       // Hide the loading spinner after fetching and displaying online users
       loadingSpinner.style.display = 'none';
 
-      //Error handling 
+      // Error handling 
     } catch (error) {
       console.error("Error searching online users:", error);
-
     }
   }
 }
+
 
 
 function stopCountDown() {
@@ -396,9 +400,9 @@ function displaySlider(images) {
           }
 
           // Check for winner
-          if (player1Score >= 5) {
+          if (player1Score >= 50) {
             alert("Player 1 wins!");
-          } else if (player2Score >= 5) {
+          } else if (player2Score >= 50) {
             alert("Player 2 wins!");
           } else {
             // Update score display

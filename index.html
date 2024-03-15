@@ -69,15 +69,10 @@
 
                 // Save the access token to a cookie
                 document.cookie = `accessToken=${data.token};expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()};path=/`;
-                console.log('Access token saved to cookie', data.token);
-
                 // Save the access token to local storage as well
                 localStorage.setItem('accessToken', data.token);
-                console.log('Access token saved to local storage', data.token);
                 //save the firstname to the local storage
-                console.log(data.data.lastname);
                 localStorage.setItem('username', data.data.lastname);
-
                 // // Redirecting to the guide page
                 window.location.href = 'multiplayers.html';
             } catch (error) {
