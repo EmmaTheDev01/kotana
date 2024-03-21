@@ -13,6 +13,7 @@
     <div class="register">
         <div class="logo-box">
             <img src="resources/saye logo.png" alt="logo" />
+            <p class="game-title">Kotana game</p>
         </div>
         <div class="form-box">
             <form id="registerForm">
@@ -36,79 +37,79 @@
         </div>
     </div>
     <script src="env.js"></script>
-        <script>
-            document.getElementById("registerForm").addEventListener("submit", function (event) {
-                event.preventDefault(); // Prevent the form from submitting normally
-                // Show the loading indicator
-                document.getElementById('loading').style.display = 'block';
+    <script>
+        document.getElementById("registerForm").addEventListener("submit", function (event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+            // Show the loading indicator
+            document.getElementById('loading').style.display = 'block';
 
-                // Check if the checkbox is checked
-                const agreeTerms = document.getElementById("termsCheckbox").checked;
-                if (!agreeTerms) {
-                    alert("Please agree to the terms and conditions");
-                    return;
-                }
+            // Check if the checkbox is checked
+            const agreeTerms = document.getElementById("termsCheckbox").checked;
+            if (!agreeTerms) {
+                alert("Please agree to the terms and conditions");
+                return;
+            }
 
-                // Gather form data
-                const firstname = document.getElementById("firstname").value;
-                const lastname = document.getElementById("lastname").value;
-                const email = document.getElementById("email").value;
-                const password = document.getElementById("password").value;
-                const confirm_password = document.getElementById("confirm_password").value;
+            // Gather form data
+            const firstname = document.getElementById("firstname").value;
+            const lastname = document.getElementById("lastname").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirm_password = document.getElementById("confirm_password").value;
 
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    document.getElementById("emailError").style.display = "block";
-                    return;
-                } else {
-                    document.getElementById("emailError").style.display = "none";
-                }
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById("emailError").style.display = "block";
+                return;
+            } else {
+                document.getElementById("emailError").style.display = "none";
+            }
 
-                // Validate password strength
-                const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-                if (!passwordRegex.test(password)) {
-                    document.getElementById("passwordError").style.display = "block";
-                    return;
-                } else {
-                    document.getElementById("passwordError").style.display = "none";
-                }
+            // Validate password strength
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById("passwordError").style.display = "block";
+                return;
+            } else {
+                document.getElementById("passwordError").style.display = "none";
+            }
 
-                // Compare passwords
-                if (password !== confirm_password) {
-                    alert("Passwords do not match");
-                    return;
-                }
+            // Compare passwords
+            if (password !== confirm_password) {
+                alert("Passwords do not match");
+                return;
+            }
 
-                // Make an HTTP POST request to the server
-                fetch(window.env.API_URL + "/auth/register", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        firstname,
-                        lastname,
-                        email,
-                        password,
+            // Make an HTTP POST request to the server
+            fetch(window.env.API_URL + "/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    firstname,
+                    lastname,
+                    email,
+                    password,
 
-                    })
                 })
-                    .then(response => response.json())
-                    .then(data => {
-                        // Handling the response from the server
-                        console.log(data);
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // Handling the response from the server
+                    console.log(data);
 
-                        // Redirecting to the login page
-                        window.location.href = "index.html";
+                    // Redirecting to the login page
+                    window.location.href = "index.html";
 
-                    })
-                    .catch(error => {
-                        console.error("Error:", error);
-                        alert("Registration failed");
-                    });
-            });
-        </script>
+                })
+                .catch(error => {
+                    console.error("Error:", error);
+                    alert("Registration failed");
+                });
+        });
+    </script>
 </body>
 
 </html>

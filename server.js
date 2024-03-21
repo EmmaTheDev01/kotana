@@ -21,10 +21,7 @@ const login = async (email, password) => {
         const data = await response.json();
         console.log(data);
 
-        // Save the access token to a cookie
-        document.cookie = `accessToken=${data.token};expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()};path=/`;
-        // Save the access token to local storage as well
-        localStorage.setItem('accessToken', data.token);
+
         // Save the firstname to the local storage
         localStorage.setItem('username', data.data.lastname);
         // Redirecting to the guide page

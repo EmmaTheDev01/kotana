@@ -152,19 +152,19 @@
       // Logout function
       function logout() {
         // Retrieve the access token from the local storage
-        const accessToken = localStorage.getItem('accessToken');
-
+       
         // Remove user data from local storage
         localStorage.removeItem('username');
-        localStorage.removeItem('accessToken');
+        cookies.removeItem('accessToken');
+        sessionStorage.removeItem('score');
 
         // Update the user's online status to false if access token is available
         if (accessToken) {
           fetch(window.env.API_URL + '/online/reset', {
             method: 'PUT',
             headers: {
-              'Authorization': 'Bearer ' + accessToken, // Include the access token in the headers
-              'Content-Type': 'application/json'
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + accessToken, 
             },
             body: JSON.stringify({ online: false }),
           })

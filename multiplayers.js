@@ -126,6 +126,58 @@ async function searchOnlineUsers() {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
+
+        }
+      });
+
+      // Check if the response is successful
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Process the object of online users returned by the server
+      const responseData = await response.json();
+      const data = responseData.data;
+      console.log(data)
+      const onlineusersList = document.querySelector("#onlineUsersList");
+
+      // Iterate over the array of users and display user information
+      data.forEach(user => {
+        const name = user.firstname + " " + user.lastname;
+        const listItem = document.createElement("li");
+        listItem.textContent = name;
+        listItem.style.cursor = "pointer";
+        listItem.style.padding = "5px";
+        onlineusersList.appendChild(listItem);
+      });
+
+      // Hide the loading spinner after fetching and displaying online users
+      loadingSpinner.style.display = 'none';
+
+      // Error handling 
+    } catch (error) {
+      console.error("Error searching online users:", error);
+    }
+  }
+}
+
+// Function to search for online users
+async function getAvailableGames() {
+  const accessToken = document.cookie
+    .split('; ')
+    .find(row => row.startsWith('accessToken='))
+    ?.split('=')[1];
+  if (accessToken) {
+    try {
+      const loadingSpinner = document.querySelector('.l-spinner');
+      loadingSpinner.style.display = 'block'; // Show the loading spinner
+
+      // Fetch online users from the API endpoint
+      const response = await fetch(window.env.API_URL + "/game/available", {
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json',
+
         }
       });
 

@@ -140,6 +140,13 @@ a:hover {
   width: 160px;
   height: 100%;
 }
+.game-title{
+  font-family:Georgia, 'Times New Roman', Times, serif;
+  color: #7e2929;
+  font-size: 1.3rem;
+  font-weight: 900 ;
+  text-transform: uppercase;
+}
 
 input {
   display: block;
