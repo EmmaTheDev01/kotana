@@ -29,7 +29,7 @@
                     <li class="menu-item" id="multiplayer">Multiple player</li>
                 </a>
                 <li class="menu-item" id="top_score">Top score</li>
-                <li class="menu-item" id="logout">Logout</li>
+                <li class="menu-item" id="logout"></li>
             </ul>
         </div>
         <div class="default-card">
@@ -128,6 +128,7 @@
             function logout() {
                 // Clear any stored user data, e.g., remove authentication token from localStorage
                 localStorage.removeItem("accessToken");
+                cookie.removeItem("accessToken")
                 sessionStorage.removeItem("score");
                 localStorage.removeItem("username");
                 // Redirect the user to the login page
@@ -136,11 +137,23 @@
 
             // Call getUserDetails function when the page loads
             document.addEventListener("DOMContentLoaded", function () {
-               
 
-                // Add click event listener to logout button
-                const logoutButton = document.getElementById("logout");
-                logoutButton.addEventListener("click", logout);
+                //Get cookie
+                const accessToken = document.cookie
+                    .split('; ')
+                    .find(row => row.startsWith('accessToken='))
+                    ?.split('=')[1];
+                if (accessToken) {
+                    // Add click event listener to logout button
+                    const logoutButton = document.getElementById("logout");
+                    logoutButton.textContent = "Logout";
+                    logoutButton.addEventListener("click", logout);
+                }
+                else {
+                    const logoutButton = document.getElementById("logout");
+                    logoutButton.textContent = "Login";
+                    window.location.href = "index.html";
+                }
             });
         </script>
     </div>

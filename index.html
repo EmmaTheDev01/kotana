@@ -48,7 +48,6 @@
 
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
             try {
                 const response = await fetch(window.env.API_URL + '/auth/login', {
                     method: 'POST',
@@ -68,13 +67,17 @@
                 const data = await response.json();
                 console.log(data);
 
-                // Save the access token to a cookie
-                document.cookie = `accessToken=${data.token};expires=${new Date(Date.now() + 24 * 60 * 60 * 1000).toUTCString()};path=/`;
-                //save the firstname to the local storage
-                localStorage.setItem('username', data.data.lastname);
-                // // Redirecting to the guide page
+                // Save the token as a cookie
+                document.cookie = `accessToken=${data.token}; SameSite=None; Secure`; // SameSite=None and Secure are used for cross-site cookies
+                //save token in localstorage
+                localStorage.setItem('accessToken', data.token);
+                // Hide the loading indicator
+                document.getElementById('loading').style.display = 'none';
+
+                // Redirecting to the guide page
                 window.location.href = 'multiplayers.html';
             } catch (error) {
+                document.getElementById('loading').style.display = 'none';
                 console.error(error);
                 alert('Login failed');
             }

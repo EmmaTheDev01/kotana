@@ -112,10 +112,7 @@ function startCountDown() {
 }
 // Function to search for online users
 async function searchOnlineUsers() {
-  const accessToken = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('accessToken='))
-    ?.split('=')[1];
+  const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
   if (accessToken) {
     try {
       const loadingSpinner = document.querySelector('.l-spinner');
@@ -161,57 +158,39 @@ async function searchOnlineUsers() {
   }
 }
 
-// Function to search for online users
+
+// Function to search for available games
 async function getAvailableGames() {
-  const accessToken = document.cookie
-    .split('; ')
-    .find(row => row.startsWith('accessToken='))
-    ?.split('=')[1];
+  const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
   if (accessToken) {
     try {
-      const loadingSpinner = document.querySelector('.l-spinner');
-      loadingSpinner.style.display = 'block'; // Show the loading spinner
-
-      // Fetch online users from the API endpoint
+      // Fetch available games from the API endpoint
       const response = await fetch(window.env.API_URL + "/game/available", {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
-
+          'Authorization': `Bearer ${getCookie("accessToken") || localStorage.getItem("accessToken")}`
         }
       });
 
-      // Check if the response is successful
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      // Process the object of online users returned by the server
+      // Process the object of available games returned by the server
       const responseData = await response.json();
-      const data = responseData.data;
-      console.log(data)
-      const onlineusersList = document.querySelector("#onlineUsersList");
+      const data = responseData;
+      console.log(data);
 
-      // Iterate over the array of users and display user information
-      data.forEach(user => {
-        const name = user.firstname + " " + user.lastname;
-        const listItem = document.createElement("li");
-        listItem.textContent = name;
-        listItem.style.cursor = "pointer";
-        listItem.style.padding = "5px";
-        onlineusersList.appendChild(listItem);
-      });
+      // Display available games in the UI
+      // Code for displaying available games goes here...
 
-      // Hide the loading spinner after fetching and displaying online users
-      loadingSpinner.style.display = 'none';
-
-      // Error handling 
     } catch (error) {
-      console.error("Error searching online users:", error);
+      console.error("Error fetching available games:", error);
     }
   }
 }
-
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(';').shift();
+}
 
 
 function stopCountDown() {
