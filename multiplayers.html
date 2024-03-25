@@ -170,6 +170,8 @@
               throw new Error('Failed to update online status');
             }
           } else {
+            localStorage.removeItem('accessToken');
+            cookie.removeItem('accessToken');
             window.location.href = 'index.html';
           }
         } catch (error) {
