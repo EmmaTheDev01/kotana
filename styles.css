@@ -27,9 +27,9 @@ body {
   margin: 0;
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
-  background-image: url('https://images.rawpixel.com/image_800/czNmcy1wcml2YXRlL3Jhd3BpeGVsX2ltYWdlcy93ZWJzaXRlX2NvbnRlbnQvbHIvcm0yNTEtbWluZC0xNS1hXzEuanBn.jpg');
+  background-image: url('/resources/bg.jpg');
   background-repeat: no-repeat;
-  background-color: #1f114c;
+  background-color: #420405;
   background-position: center;
   background-size: cover;
 }

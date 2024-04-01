@@ -154,6 +154,7 @@ async function searchOnlineUsers() {
       // Error handling 
     } catch (error) {
       console.error("Error searching online users:", error);
+
     }
   }
 }
@@ -162,6 +163,7 @@ async function searchOnlineUsers() {
 // Function to search for available games
 async function getAvailableGames() {
   const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
+
   if (accessToken) {
     try {
       // Fetch available games from the API endpoint
@@ -169,7 +171,7 @@ async function getAvailableGames() {
         method: "GET",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${getCookie("accessToken") || localStorage.getItem("accessToken")}`
+          'Authorization': `Bearer ${accessToken}`
         }
       });
 
@@ -187,9 +189,15 @@ async function getAvailableGames() {
   }
 }
 function getCookie(name) {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) return parts.pop().split(';').shift();
+  const cookieString = document.cookie;
+  const cookies = cookieString.split("; ");
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].split("=");
+    if (cookie[0] === name) {
+      return cookie[1];
+    }
+  }
+  return null;
 }
 
 
@@ -383,7 +391,7 @@ function displaySlider(images) {
         levelUpSound.play();
       }
       else if (player1Score >= 40 && player1Score < 45) {
-        // Increase the level to 3
+        // Increase the level to 3 
         level = 4;
         // Update any UI elements or perform actions related to level change
         console.log("Level up! Current level: ", level);
@@ -425,8 +433,12 @@ function displaySlider(images) {
           // Increment the score
           if (player1Turn) {
             player1Score++;
+            img.removeEventListener("click", this);
+            SliderContainer.classList.add("hidden");
           } else {
             player2Score++;
+            img.removeEventListener("click", this);
+            SliderContainer.classList.add("hidden");
           }
 
           // Check for winner
@@ -450,6 +462,8 @@ function displaySlider(images) {
         } else {
           fail.classList.remove('hidden');
           failSound.play();
+          img.removeEventListener("click", this);
+          SliderContainer.classList.add("hidden");
 
           // Switch player if first player fails
           player1Turn = !player1Turn;

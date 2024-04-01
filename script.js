@@ -332,11 +332,15 @@ function displaySlider(images) {
           // Reset the timer to starting seconds
           time = startingSeconds;
           localStorage.setItem("savedTime", time);
+          img.removeEventListener("click", this);
+          SliderContainer.classList.add("hidden");
           setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
           stopCountDown();
         } else {
           fail.classList.remove('hidden');
           failSound.play();
+          img.removeEventListener("click", this);
+          SliderContainer.classList.add("hidden");
         }
       }
 

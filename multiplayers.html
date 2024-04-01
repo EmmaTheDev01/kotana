@@ -157,7 +157,7 @@
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken,
+                'Authorization': 'Bearer ' + localStorage.getItem(data.token),
               },
               body: JSON.stringify({ online: false }),
             });
@@ -179,6 +179,7 @@
           console.error('Fetch error:', error);
           window.location.href = 'index.html';
           localStorage.removeItem('accessToken');
+          document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         }
       }
 

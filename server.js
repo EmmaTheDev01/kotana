@@ -1,17 +1,13 @@
-// app.js
+const API_URL = window.env.API_URL;
 
-// Login function
 const login = async (email, password) => {
     try {
-        const response = await fetch(window.env.API_URL + '/auth/login', {
+        const response = await fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            body: JSON.stringify({ email, password })
         });
 
         if (!response.ok) {
@@ -19,123 +15,36 @@ const login = async (email, password) => {
         }
 
         const data = await response.json();
-        console.log(data);
-
-
-        // Save the firstname to the local storage
         localStorage.setItem('username', data.data.lastname);
-        // Redirecting to the guide page
-        window.location.href = 'multiplayers.html';
+        window.location.replace('multiplayers.html');
     } catch (error) {
-        console.error(error);
+        console.error('Login error:', error);
         alert('Login failed');
     }
 };
 
-// Register function
-const register = async (firstname, lastname, email, password, confirm_password) => {
+const register = async (firstname, lastname, email, password) => {
     try {
-        const response = await fetch(window.env.API_URL + '/auth/register', {
+        const response = await fetch(`${API_URL}/auth/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                firstname,
-                lastname,
-                email,
-                password
-            })
+            body: JSON.stringify({ firstname, lastname, email, password })
         });
 
         if (!response.ok) {
             throw new Error('Registration failed');
         }
 
-        // Redirecting to the login page
-        window.location.href = 'index.html';
+        window.location.replace('index.html');
     } catch (error) {
-        console.error('Error:', error);
+        console.error('Registration error:', error);
         alert('Registration failed');
     }
 };
 
-// Logout function
-const logout = () => {
-    const accessToken = localStorage.getItem('accessToken');
 
-    localStorage.removeItem('username');
-    localStorage.removeItem('accessToken');
-
-    if (accessToken) {
-        fetch(window.env.API_URL + '/online/reset', {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'Bearer ' + accessToken,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ online: false }),
-        })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error('Failed to update online status');
-                }
-            })
-            .then(data => {
-                window.location.href = 'index.html';
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-                window.location.href = 'index.html';
-            });
-    } else {
-        window.location.href = 'index.html';
-    }
-};
-
-// Get online users function
-const searchOnlineUsers = async () => {
-    const accessToken = document.cookie.split('; ').find(row => row.startsWith('accessToken=')).split('=')[1];
-    if (accessToken) {
-        try {
-            const loadingSpinner = document.querySelector('.l-spinner');
-            loadingSpinner.style.display = 'block';
-
-            const response = await fetch(window.env.API_URL + '/user/online', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const responseData = await response.json();
-            const data = responseData.data;
-            console.log(data)
-            const onlineusersList = document.querySelector("#onlineUsersList");
-
-            data.forEach(user => {
-                const name = user.firstname + ' ' + user.lastname;
-                const listItem = document.createElement('li');
-                listItem.textContent = name;
-                listItem.style.cursor = 'pointer';
-                listItem.style.padding = '5px';
-                onlineusersList.appendChild(listItem);
-            });
-
-            loadingSpinner.style.display = 'none';
-        } catch (error) {
-            console.error('Error searching online users:', error);
-        }
-    }
-};
-
-// Add event listeners for login and register forms
 document.getElementById('loginForm').addEventListener('submit', async function (event) {
     event.preventDefault();
     document.getElementById('loading').style.display = 'block';
@@ -152,7 +61,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     await login(email, password);
 });
 
-document.getElementById('registerForm').addEventListener('submit', function (event) {
+document.getElementById('registerForm').addEventListener('submit', async function (event) {
     event.preventDefault();
     document.getElementById('loading').style.display = 'block';
 
@@ -166,10 +75,100 @@ document.getElementById('registerForm').addEventListener('submit', function (eve
     const lastname = document.getElementById('lastname').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
-    const confirm_password = document.getElementById('confirm_password').value;
 
-    register(firstname, lastname, email, password, confirm_password);
+    await register(firstname, lastname, email, password);
 });
 
-// Call searchOnlineUsers function when the window loads
-window.onload = searchOnlineUsers;
+
+const logout = async () => {
+    const accessToken = localStorage.getItem('accessToken');
+    localStorage.removeItem('username');
+    localStorage.removeItem('accessToken');
+
+    if (accessToken) {
+        try {
+            const response = await fetch(`${API_URL}/online/reset`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ online: false }),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to update online status');
+            }
+
+            window.location.replace('index.html');
+        } catch (error) {
+            console.error('Logout error:', error);
+            window.location.replace('index.html');
+        }
+    } else {
+        window.location.replace('index.html');
+    }
+};
+
+const searchOnlineUsers = async () => {
+    try {
+        const response = await fetch(`${API_URL}/user/online`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        const onlineUsersList = document.querySelector("#onlineUsersList");
+
+        responseData.data.forEach(user => {
+            const name = user.firstname + ' ' + user.lastname;
+            const listItem = document.createElement('li');
+            listItem.textContent = name;
+            listItem.style.cursor = 'pointer';
+            listItem.style.padding = '5px';
+            onlineUsersList.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error searching online users:', error);
+    }
+};
+
+
+// Function to search for available games
+async function getAvailableGames() {
+    const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
+    if (accessToken) {
+        try {
+            // Fetch available games from the API endpoint
+            const response = await fetch(window.env.API_URL + "/game/available", {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${getCookie("accessToken") || localStorage.getItem("accessToken")}`
+                }
+            });
+
+            // Process the object of available games returned by the server
+            const responseData = await response.json();
+            const data = responseData;
+            console.log(data);
+
+            // Display available games in the UI
+            // Code for displaying available games goes here...
+
+        } catch (error) {
+            console.error("Error fetching available games:", error);
+        }
+    }
+}
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
