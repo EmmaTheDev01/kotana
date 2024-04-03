@@ -130,6 +130,11 @@ async function getAvailableGames() {
 
       // Process the object of available games returned by the server
       const responseData = await response.json();
+
+      if (!Array.isArray(responseData.games)) {
+        throw new Error('Invalid response format: games is not an array');
+      }
+
       const games = responseData.games;
       console.log(games);
 
@@ -139,31 +144,44 @@ async function getAvailableGames() {
       // Iterate over the array of games and display game information
       games.forEach(game => {
         const code = game.code;
+        const id = game._id;
+        console.log(code, id);
         const listItem = document.createElement("li");
         listItem.textContent = code;
         listItem.style.cursor = "pointer";
         listItem.style.padding = "5px";
+
+        // Add event listener to join the game when code is clicked
+        listItem.addEventListener('click', async () => {
+          try {
+            const joinResponse = await fetch(window.env.API_URL + `/game/join/${id}`, {
+              method: "POST",
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+              },
+              body: JSON.stringify({ code: code })
+            });
+            if (!joinResponse.ok) {
+              throw new Error('Failed to join the game');
+            }
+            // Handle success (e.g., redirect to the game)
+            console.log('Joined the game successfully');
+          } catch (error) {
+            console.error('Error joining the game:', error);
+          }
+        });
+
         onlineusersList.appendChild(listItem);
       });
+
       // Hide the loading spinner after fetching and displaying online users
       loadingSpinner.style.display = 'none';
-      // Code for displaying available games goes here...
 
     } catch (error) {
       console.error("Error fetching available games:", error);
     }
   }
-}
-function getCookie(name) {
-  const cookieString = document.cookie;
-  const cookies = cookieString.split("; ");
-  for (let i = 0; i < cookies.length; i++) {
-    const cookie = cookies[i].split("=");
-    if (cookie[0] === name) {
-      return cookie[1];
-    }
-  }
-  return null;
 }
 
 
