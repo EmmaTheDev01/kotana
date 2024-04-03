@@ -85,7 +85,7 @@ a:hover {
   color: #949494;
 }
 #onlineUsersList{
-  height: 9rem;
+  height: 7rem;
   overflow: auto;
 }
 .overlay {
@@ -98,21 +98,17 @@ a:hover {
   z-index: 1;
 
 }
-#codeSubmit{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-#code{
-  width: 70%;
-}
-.code_btn{
-  width: 7rem;
+#creategame{
+  margin: 1px;
+  padding: 0.6rem;
+  border-radius: 4px;
+  border: none;
   color: #fff;
   background-color: #771919;
-  border: none;
   cursor: pointer;
-  padding: .7rem;
+}
+#creategame:hover{
+  background-color: #000;
 }
 .code_btn:hover{
   color: #fff;

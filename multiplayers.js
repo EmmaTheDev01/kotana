@@ -110,7 +110,6 @@ let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
-
 // Function to search for available games
 async function getAvailableGames() {
   const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
@@ -140,6 +139,9 @@ async function getAvailableGames() {
 
       // Display available games in the UI
       const onlineusersList = document.querySelector("#onlineUsersList");
+
+      // Clear the existing list items
+      onlineusersList.innerHTML = '';
 
       // Iterate over the array of games and display game information
       games.forEach(game => {
@@ -175,11 +177,44 @@ async function getAvailableGames() {
         onlineusersList.appendChild(listItem);
       });
 
+      if (games.length < 2) {
+        // Create div for the "Create new game" button
+        
+        document.querySelector(".creategame_btn").innerHTML = '<button id="creategame" onclick="createGame()">Create new game</button>';
+        
+
+      }
       // Hide the loading spinner after fetching and displaying online users
       loadingSpinner.style.display = 'none';
 
     } catch (error) {
       console.error("Error fetching available games:", error);
+    }
+  }
+}
+
+
+//Create game if no available games
+async function createGame() {
+  const accessToken = localStorage.getItem("accessToken");
+  if (accessToken) {
+    try {
+      const response = await fetch(window.env.API_URL + "/game/create", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify({})
+      });
+      if (!response.ok) {
+        throw new Error('Failed to create game');
+      }
+      // Handle success 
+      console.log('Created game successfully');
+      location.reload();
+    } catch (error) {
+      console.error('Error creating game:', error);
     }
   }
 }

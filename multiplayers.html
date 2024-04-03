@@ -44,16 +44,20 @@
     <div class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h3 class="modal-text">View all open games codes</h3>
+        <h3 class="modal-text">All open game codes</h3>
 
         <!-- Display online users -->
         <div class="online-users" id="onlineUsers">
           <div class="l-spinner"></div>
           <ol id="onlineUsersList">
           </ol>
-          <p class="modal_footer">Here is the list of all open games to join. Copy the code and send it to play
-            opponent.</p>
         </div>
+        <div class="creategame_btn">
+            
+        </div>
+        <p class="modal_footer">Here is the list of all open games to join. Copy the code and send it to play
+          opponent.</p>
+         
 
       </div>
     </div>
@@ -151,7 +155,7 @@
 
       async function logout() {
         try {
-          const accessToken = getCookie('accessToken') || localStorage.getItem('accessToken');
+          const accessToken =  localStorage.getItem('accessToken');
           if (accessToken) {
             const response = await fetch(window.env.API_URL + '/online/reset', {
               method: 'PUT',
@@ -196,7 +200,7 @@
         getAvailableGames();
 
         //Get token
-        const accessToken = getCookie("accessToken");
+        const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
         if (accessToken) {
           // Add click event listener to logout button
           const logoutButton = document.getElementById("logout");
