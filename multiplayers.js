@@ -110,59 +110,12 @@ let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
-// Function to search for online users
-async function searchOnlineUsers() {
-  const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
-  if (accessToken) {
-    try {
-      const loadingSpinner = document.querySelector('.l-spinner');
-      loadingSpinner.style.display = 'block'; // Show the loading spinner
-
-      // Fetch online users from the API endpoint
-      const response = await fetch(window.env.API_URL + "/user/online", {
-        method: "GET",
-        headers: {
-          'Content-Type': 'application/json',
-
-        }
-      });
-
-      // Check if the response is successful
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      // Process the object of online users returned by the server
-      const responseData = await response.json();
-      const data = responseData.data;
-      console.log(data)
-      const onlineusersList = document.querySelector("#onlineUsersList");
-
-      // Iterate over the array of users and display user information
-      data.forEach(user => {
-        const name = user.firstname + " " + user.lastname;
-        const listItem = document.createElement("li");
-        listItem.textContent = name;
-        listItem.style.cursor = "pointer";
-        listItem.style.padding = "5px";
-        onlineusersList.appendChild(listItem);
-      });
-
-      // Hide the loading spinner after fetching and displaying online users
-      loadingSpinner.style.display = 'none';
-
-      // Error handling 
-    } catch (error) {
-      console.error("Error searching online users:", error);
-
-    }
-  }
-}
-
 
 // Function to search for available games
 async function getAvailableGames() {
   const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
+  const loadingSpinner = document.querySelector('.l-spinner');
+  loadingSpinner.style.display = 'block'; // Show the loading spinner
 
   if (accessToken) {
     try {
@@ -177,10 +130,23 @@ async function getAvailableGames() {
 
       // Process the object of available games returned by the server
       const responseData = await response.json();
-      const data = responseData;
-      console.log(data);
+      const games = responseData.games;
+      console.log(games);
 
       // Display available games in the UI
+      const onlineusersList = document.querySelector("#onlineUsersList");
+
+      // Iterate over the array of games and display game information
+      games.forEach(game => {
+        const code = game.code;
+        const listItem = document.createElement("li");
+        listItem.textContent = code;
+        listItem.style.cursor = "pointer";
+        listItem.style.padding = "5px";
+        onlineusersList.appendChild(listItem);
+      });
+      // Hide the loading spinner after fetching and displaying online users
+      loadingSpinner.style.display = 'none';
       // Code for displaying available games goes here...
 
     } catch (error) {

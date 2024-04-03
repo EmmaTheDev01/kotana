@@ -127,7 +127,7 @@
             // Logout function
             async function logout() {
                 try {
-                    const accessToken = getCookie('accessToken');
+                    const accessToken = getCookie('accessToken') || localStorage.getItem('accessToken');
                     if (accessToken) {
                         const response = await fetch(window.env.API_URL + '/online/reset', {
                             method: 'PUT',
