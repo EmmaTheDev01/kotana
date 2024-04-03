@@ -44,7 +44,7 @@
     <div class="modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h3 class="modal-text">View all online players</h3>
+        <h3 class="modal-text">View all open games codes</h3>
 
         <!-- Display online users -->
         <div class="online-users" id="onlineUsers">
@@ -52,7 +52,7 @@
           <ol id="onlineUsersList">
 
           </ol>
-          <p class="modal_footer">Here is the list of all online users. Click on a user to send a signal.</p>
+          <p class="modal_footer">Here is the list of all open games to join. Copy the code and send it to play opponent.</p>
         </div>
 
       </div>
@@ -157,7 +157,7 @@
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem(data.token),
+                'Authorization': `Bearer ${accessToken}`
               },
               body: JSON.stringify({ online: false }),
             });
