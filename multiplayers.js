@@ -79,7 +79,7 @@ const level_txt = document.querySelector('.level_txt');
 const level_number = document.querySelector('#level_number');
 //Modal hiding and displaying
 close.addEventListener('click', () => {
-  if (modal.classList.contains('hidden')) {
+  if (modal.classList.contains('hidden')) {``
     modal.classList.remove('hidden');
   } else {
     modal.classList.add('hidden');
