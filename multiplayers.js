@@ -79,7 +79,8 @@ const level_txt = document.querySelector('.level_txt');
 const level_number = document.querySelector('#level_number');
 //Modal hiding and displaying
 close.addEventListener('click', () => {
-  if (modal.classList.contains('hidden')) {``
+  if (modal.classList.contains('hidden')) {
+    ``
     modal.classList.remove('hidden');
   } else {
     modal.classList.add('hidden');
@@ -110,7 +111,44 @@ let currentIndex = 0;
 function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
-// Function to search for available games
+// Function to join a game using the game code in the endpoint URL
+async function joinGameWithCode(game, gameId) {
+  const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
+
+  if (accessToken) {
+    try {
+      const response = await fetch(`${window.env.API_URL}/game/join/${game.code}`, {
+        method: "PUT",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+
+      if (response.ok) {
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const joinData = await response.json();
+          console.log(joinData);
+
+          // Handle success (e.g., redirect to the game)
+          console.log('Joined the game successfully');
+          alert("Joined the game successfully");
+          modal.classList.add('hidden');
+        } else {
+          throw new Error('Invalid response format');
+        }
+      } else {
+        throw new Error('Failed to join the game');
+      }
+    } catch (error) {
+      console.error('Error joining the game:', error);
+      alert('Error joining the game:', error.message);
+    }
+  }
+}
+
+// Function to get for available games
 async function getAvailableGames() {
   const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
   const loadingSpinner = document.querySelector('.l-spinner');
@@ -147,30 +185,23 @@ async function getAvailableGames() {
       games.forEach(game => {
         const code = game.code;
         const id = game._id;
-        console.log(code, id);
         const listItem = document.createElement("li");
+        listItem.dataset.gameId = id; // Store the game ID as a data attribute
         listItem.textContent = code;
         listItem.style.cursor = "pointer";
         listItem.style.padding = "5px";
-
-        // Add event listener to join the game when code is clicked
+        // Click on the code to join the game
         listItem.addEventListener('click', async () => {
           try {
-            const joinResponse = await fetch(window.env.API_URL + `/game/join/${id}`, {
-              method: "POST",
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-              },
-              body: JSON.stringify({ code: code })
-            });
-            if (!joinResponse.ok) {
-              throw new Error('Failed to join the game');
-            }
-            // Handle success (e.g., redirect to the game)
-            console.log('Joined the game successfully');
+            const gameId = listItem.dataset.gameId; // Retrieve the game ID from the data attribute
+            console.log('Joining game with ID:', gameId); // Log the game ID being used
+            console.log('API URL:', `${window.env.API_URL}/game/join/${gameId}`);
+
+            // Call the function to join the game using the game code in the URL
+            await joinGameWithCode(game, gameId);
           } catch (error) {
             console.error('Error joining the game:', error);
+            alert('Error joining the game:', error.message);
           }
         });
 
@@ -179,10 +210,7 @@ async function getAvailableGames() {
 
       if (games.length < 2) {
         // Create div for the "Create new game" button
-        
         document.querySelector(".creategame_btn").innerHTML = '<button id="creategame" onclick="createGame()">Create new game</button>';
-        
-
       }
       // Hide the loading spinner after fetching and displaying online users
       loadingSpinner.style.display = 'none';
@@ -192,7 +220,6 @@ async function getAvailableGames() {
     }
   }
 }
-
 
 //Create game if no available games
 async function createGame() {
@@ -218,6 +245,7 @@ async function createGame() {
     }
   }
 }
+
 
 
 function stopCountDown() {
