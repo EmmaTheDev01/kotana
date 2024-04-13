@@ -135,6 +135,7 @@ async function joinGameWithCode(game, gameId) {
           console.log('Joined the game successfully');
           alert("Joined the game successfully");
           modal.classList.add('hidden');
+          overlay.classList.add('hidden');
         } else {
           throw new Error('Invalid response format');
         }
