@@ -53,11 +53,11 @@
           </ol>
         </div>
         <div class="creategame_btn">
-            
+
         </div>
         <p class="modal_footer">Here is the list of all open games to join. Click the code and send it to play
           opponent.</p>
-         
+
 
       </div>
     </div>
@@ -155,7 +155,7 @@
 
       async function logout() {
         try {
-          const accessToken =  localStorage.getItem('accessToken');
+          const accessToken = localStorage.getItem('accessToken');
           if (accessToken) {
             const response = await fetch(window.env.API_URL + '/online/reset', {
               method: 'PUT',
@@ -186,19 +186,14 @@
           document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         }
       }
-
-
       function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
       }
-
-
       // Call getUserDetails function when the page loads
       document.addEventListener("DOMContentLoaded", function () {
         getAvailableGames();
-
         //Get token
         const accessToken = getCookie("accessToken") || localStorage.getItem("accessToken");
         if (accessToken) {
