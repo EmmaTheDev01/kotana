@@ -1,4 +1,6 @@
-//SLIDER Definition
+
+
+//SLIDER
 var swiper = new Swiper(".slide-content", {
   slidesPerView: 5,
   spaceBetween: 30,
@@ -108,9 +110,10 @@ function startCountDown() {
   countdownInterval = setInterval(changeCountDown, 1000);
 }
 // Function to join a game using the game code in the endpoint URL
-async function joinGameWithCode(game) {
+async function joinGameWithCode(game, gameId) {
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
+
   if (accessToken) {
     try {
       const response = await fetch(
@@ -123,6 +126,7 @@ async function joinGameWithCode(game) {
           },
         }
       );
+
       if (response.ok) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
@@ -147,10 +151,12 @@ async function joinGameWithCode(game) {
     }
   }
 }
+
 // Function to join a game using the game code in the endpoint URL
 async function updateScore(game) {
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
+
   if (accessToken) {
     try {
       const response = await fetch(
@@ -164,6 +170,7 @@ async function updateScore(game) {
           body: JSON.stringify({ score: player1Score }),
         }
       );
+
       if (response.ok) {
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
@@ -180,16 +187,19 @@ async function updateScore(game) {
       }
     } catch (error) {
       console.error("Error updating score:", error);
-
+      console.log(`${window.env.API_URL}/game/score/${game.code}`)
+      alert("Error updating score:", error.message);
     }
   }
 }
+
 // Function to get for available games
 async function getAvailableGames() {
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
   const loadingSpinner = document.querySelector(".l-spinner");
   loadingSpinner.style.display = "block"; // Show the loading spinner
+
   if (accessToken) {
     try {
       // Fetch available games from the API endpoint
@@ -200,17 +210,23 @@ async function getAvailableGames() {
           Authorization: `Bearer ${accessToken}`,
         },
       });
+
       // Process the object of available games returned by the server
       const responseData = await response.json();
+
       if (!Array.isArray(responseData.games)) {
         throw new Error("Invalid response format: games is not an array");
       }
+
       const games = responseData.games;
       console.log(games);
+
       // Display available games in the UI
       const onlineusersList = document.querySelector("#onlineUsersList");
+
       // Clear the existing list items
       onlineusersList.innerHTML = "";
+
       // Iterate over the array of games and display game information
       games.forEach((game) => {
         const code = game.code;
@@ -225,10 +241,6 @@ async function getAvailableGames() {
           try {
             const gameId = listItem.dataset.gameId; // Retrieve the game ID from the data attribute
             console.log("Joining game with ID:", gameId); // Log the game ID being used
-            console.log(
-              "API URL:",
-              `${window.env.API_URL}/game/join/${gameId}`
-            );
             // Call the function to join the game using the game code in the URL
             await joinGameWithCode(game, gameId);
           } catch (error) {
@@ -239,6 +251,7 @@ async function getAvailableGames() {
 
         onlineusersList.appendChild(listItem);
       });
+
       if (games.length < 2) {
         // Create div for the "Create new game" button
         document.querySelector(".creategame_btn").innerHTML =
@@ -251,6 +264,7 @@ async function getAvailableGames() {
     }
   }
 }
+
 //Create game if no available games
 async function createGame() {
   const accessToken = localStorage.getItem("accessToken");
@@ -275,16 +289,19 @@ async function createGame() {
     }
   }
 }
-//Function to stop the countdown
+
+
 function stopCountDown() {
   clearInterval(countdownInterval);
 }
-//Function  to change the countdown
+
 function changeCountDown() {
   const minutes = Math.floor(time / 60);
   let seconds = time % 60;
   seconds = seconds < 10 ? "0" + seconds : seconds;
+
   timer.innerHTML = `${minutes < 10 ? "0" + minutes : minutes} : ${seconds}`;
+
   if (time === 0) {
     setTimerStyle("red", "00", "00");
     stopCountDown();
@@ -297,26 +314,33 @@ function changeCountDown() {
     timeoutSound.play();
     SliderContainer.style.display = "none";
   }
+
   time--;
   // Save the remaining time to localStorage
   localStorage.setItem("savedTime", time);
 }
+
 function setTimerStyle(color, minutes = "", seconds = "") {
   timer.style.color = color;
   timer.innerHTML = `${minutes} : ${seconds}`;
 }
 //Setting the default card to the correct image.
+
 function setDefaultCard(cardData) {
   console.log("Setting default card with clicked image data:", cardData);
+
   defaultCard.classList.remove("shaking-image");
+
   if (cardData) {
     // Set the default card's src and alt attributes based on the clicked image data
     defaultCard.setAttribute("src", cardData.image);
     defaultCard.alt = `card ${cardData.description}`;
+
     console.log("Default card updated with clicked image data:", cardData);
   } else {
     console.error("Error: Clicked image data not found.");
   }
+
   SliderContainer.classList.add("hidden");
   stopCountDown();
   shuffleButton.style.display = "block";
@@ -346,12 +370,16 @@ async function fetchDataAndDisplay() {
     const loadingSpinner = document.querySelector(".loading-spinner");
     loadingSpinner.style.display = "block";
     loadingSpinner.style.zIndex = "2";
+
     const response = await fetch("data.json");
     console.log("Response status:", response.status);
+
     const data = await response.json();
     // console.log("Data received:", data);
+
     // Shuffle the cards
     shuffleArray(data.cards);
+
     // Display the first card in the UI
     displayCard(data.cards[0], data.cards);
     // Hide the loading spinner after fetching data
@@ -360,6 +388,7 @@ async function fetchDataAndDisplay() {
     console.error("Error fetching data:", error);
   }
 }
+
 // Function to shuffle array items randomly
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -367,14 +396,18 @@ function shuffleArray(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
+
 // Function to display a card
 let currentCardData; // Declare a variable to hold the current card data
+
 function displayCard(cardData, allCards) {
   // Update description and hint
   const descriptionElement = document.querySelector(".description-heading");
   const hintElement = document.querySelector(".hint-heading");
+
   descriptionElement.textContent = `Description: ${cardData.description}`;
   hintElement.textContent = `Hint: ${cardData.hint}`;
+
   // Display images in the slider with the same hint
   const filteredImages = allCards.filter((card) => card.hint === cardData.hint);
   displaySlider(filteredImages);
@@ -382,15 +415,19 @@ function displayCard(cardData, allCards) {
   // Set the current card data
   currentCardData = cardData;
 }
+
 function displaySlider(images) {
   // Clear existing slides using Swiper API
   swiper.removeAllSlides();
+
   // Add images to the slider
   images.forEach((imageData) => {
     const slide = document.createElement("div");
     slide.classList.add("swiper-slide", "card");
+
     const cardImage = document.createElement("div");
     cardImage.classList.add("card-image");
+
     const img = document.createElement("img");
     img.src = imageData.image;
     img.classList.add("card-img", "lazyload");
@@ -402,10 +439,12 @@ function displaySlider(images) {
 
     // Add the slide to the Swiper instance
     swiper.appendSlide(slide);
+
     // Log image data to console
     console.log("Description:", imageData.description);
     console.log("Hint:", imageData.hint);
     console.log("----------------------");
+
     //Clicking the image to play the game.
     // Add a new level variable
     let level = 1;
@@ -458,34 +497,43 @@ function displaySlider(images) {
         startingSeconds = level_five;
         levelUpSound.play();
       }
+
       // Update the timer with the new startingSeconds value
       time = localStorage.getItem("savedTime") || startingSeconds;
       setTimerStyle("rgb(121, 236, 121)", "00", "00");
     }
     checkLevel();
+
+
     // Modify the score increment code in the img click event listener
     img.addEventListener("click", (event) => {
       // Check if the clicked element is an image
       if (event.target.tagName === "IMG") {
         // Get the clicked image's alt attribute
         const clickedAlt = event.target.alt;
+
         // Get the current card's description
         const currentCard = currentCardData.description.trim();
+
         // Check if the clicked image's alt is equal to the current card's description
         if (clickedAlt.trim() === `card ${currentCard.trim()}`) {
           // Increment the score
-          player1Score++
-          updateScore(game)
+
+          player1Score++;
+          scoreText.textContent = `Score: ${player1Score}`;
+          // Call the function to handle score update
+          img.removeEventListener("click", this);
+          SliderContainer.classList.add("hidden");
+
           // Check for winner
           if (player1Score >= 50) {
-            alert("You won!");
+            alert("Player 1 wins!");
           } else if (player2Score >= 50) {
-            alert("You lost!");
+            alert("Player 2 wins!");
           } else {
             // Update score display
             scoreText.textContent = `Score: ${player1Score}`;
-            //FUNCTION TO DISPLAY SCORE OF ANOTHER PLAYER
-            // playeTwo_score.textContent = `${player2Score}`;
+            playeTwo_score.textContent = `${player2Score}`;
             // Continue game
             success.classList.remove("hidden");
             scoreSound.play(); // Play the score sound effect
@@ -500,8 +548,11 @@ function displaySlider(images) {
           failSound.play();
           img.removeEventListener("click", this);
           SliderContainer.classList.add("hidden");
+
+
         }
       }
+
       SliderContainer.classList.add("hidden");
       setDefaultCard(currentCardData);
       shuffleButton.style.display = "block";
@@ -512,9 +563,12 @@ function displaySlider(images) {
       img.removeEventListener("click", this);
     });
   });
+
   // Update the Swiper instance
   swiper.update();
   const randomNumber = Math.floor(Math.random() * 7);
   swiper.slideTo(randomNumber);
 }
+
+
 
