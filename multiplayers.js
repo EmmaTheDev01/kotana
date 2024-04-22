@@ -189,9 +189,12 @@ async function updateScore() {
         if (contentType && contentType.includes("application/json")) {
           const updateData = await response.json();
           console.log(updateData);
+          const gameDetails = updateData.updatedGame;
+          let player2ScoreNum = gameDetails.players[1].score;
+          console.log(player2ScoreNum);
+          playeTwo_score.textContent = `${player2ScoreNum}`;
           // Handle success
           console.log("Score updated successfully");
-
         } else {
           throw new Error("Invalid response format");
         }
@@ -302,6 +305,7 @@ async function createGame() {
       location.reload();
     } catch (error) {
       console.error("Error creating game:", error);
+      alert("You are already in a game");
     }
   }
 }
@@ -563,12 +567,13 @@ function displaySlider(images) {
             localStorage.setItem("savedTime", time);
             setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
             stopCountDown();
+            SliderContainer.style.display = "none";
           }
         } else {
           fail.classList.remove("hidden");
           failSound.play();
           img.removeEventListener("click", this);
-          SliderContainer.classList.add("hidden");
+          SliderContainer.style.display = "none";
 
 
         }
