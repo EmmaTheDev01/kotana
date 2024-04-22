@@ -153,21 +153,16 @@
       usernameElement.textContent = localStorage.getItem('username') || 'Anonymous';
 
       async function logout() {
-        try {
+        const accessToken = localStorage.getItem('accessToken');
+        if (accessToken) {
           await deleteGame();
-          const accessToken = localStorage.getItem('accessToken');
-          if (accessToken) {
-              localStorage.removeItem('accessToken');
-              document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-              window.location.href = 'index.html';     
-        }
-       } catch (error) {
-          console.error('Fetch error:', error);
-          window.location.href = 'index.html';
           localStorage.removeItem('accessToken');
           document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+          window.location.href = 'index.html';
         }
+        window.location.href = 'index.html';
       }
+
       function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
