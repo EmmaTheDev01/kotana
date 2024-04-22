@@ -136,7 +136,7 @@ async function joinGameWithCode(game, gameId) {
 
           // Handle success (e.g., redirect to the game)
           console.log("Joined the game successfully");
-          alert("Joined the game successfully");
+          alert("Joined the game successfully. You are player 2");
           modal.classList.add("hidden");
           overlay.classList.add("hidden");
 
