@@ -68,8 +68,6 @@ const fail = document.querySelector(".fail");
 let player1Score = sessionStorage.getItem("player1Score") || 0;
 let player2Score = sessionStorage.getItem("player2Score") || 0;
 const scoreText = document.querySelector("#score");
-scoreText.textContent = `Score: ${player1Score}`;
-playeTwo_score.textContent = `${player2Score}`;
 //Ingame alerts
 const announcers = document.querySelector(".announcers");
 const timeout_text = document.querySelector(".timeout_text");
@@ -148,12 +146,12 @@ async function joinGameWithCode(game, gameId) {
           throw new Error("Invalid response format");
         }
       } else {
-         // Save the game code to session storage
-         gameCode = game.code;
-         sessionStorage.setItem("gameCode", gameCode);
-         modal.classList.add("hidden");
-         overlay.classList.add("hidden");
-         console.log(gameCode)
+        // Save the game code to session storage
+        gameCode = game.code;
+        sessionStorage.setItem("gameCode", gameCode);
+        modal.classList.add("hidden");
+        overlay.classList.add("hidden");
+        console.log(gameCode)
         throw new Error("Failed to join the game");
       }
     } catch (error) {
@@ -164,6 +162,8 @@ async function joinGameWithCode(game, gameId) {
 }
 // Function to update the score
 async function updateScore() {
+  shuffleButton.style.display = "none";
+  SliderContainer.style.display = "none";
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
 
@@ -185,14 +185,29 @@ async function updateScore() {
       );
 
       if (response.ok) {
+        // Handle success
         const contentType = response.headers.get("content-type");
         if (contentType && contentType.includes("application/json")) {
           const updateData = await response.json();
           console.log(updateData);
           const gameDetails = updateData.updatedGame;
           let player2ScoreNum = gameDetails.players[1].score;
+          let player1ScoreNum = gameDetails.players[0].score;
           console.log(player2ScoreNum);
-          playeTwo_score.textContent = `${player2ScoreNum}`;
+          player2Score = player2ScoreNum;
+          playeTwo_score.textContent = player2Score;
+          sessionStorage.setItem("player2Score", player2ScoreNum);
+          scoreText.textContent = `${player1ScoreNum}`;
+          scoreText = sessionStorage.setItem("player1Score", player1ScoreNum);
+          shuffleButton.style.display = "block";
+          SliderContainer.style.display = "block";
+
+          if (player2ScoreNum >= 50) {
+            alert("Player 2 has won the game");
+          }
+          else if (player1ScoreNum >= 50) {
+            alert("Player 1 has won the game");
+          }
           // Handle success
           console.log("Score updated successfully");
         } else {
@@ -294,7 +309,7 @@ async function createGame() {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({}),
-        
+
       });
       if (!response.ok) {
         throw new Error("Failed to create game");
@@ -540,7 +555,6 @@ function displaySlider(images) {
           // Increment the score
 
           player1Score++;
-          scoreText.textContent = `Score: ${player1Score}`;
           try {
             await updateScore();
           } catch (error) {
@@ -557,8 +571,7 @@ function displaySlider(images) {
             alert("Player 2 wins!");
           } else {
             // Update score display
-            scoreText.textContent = `Score: ${player1Score}`;
-            playeTwo_score.textContent = `${player2Score}`;
+
             // Continue game
             success.classList.remove("hidden");
             scoreSound.play(); // Play the score sound effect
