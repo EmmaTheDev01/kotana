@@ -75,6 +75,7 @@ const announcers = document.querySelector(".announcers");
 const timeout_text = document.querySelector(".timeout_text");
 const level_txt = document.querySelector(".level_txt");
 const level_number = document.querySelector("#level_number");
+let gameCode;
 //Modal hiding and displaying
 close.addEventListener("click", () => {
   if (modal.classList.contains("hidden")) {
@@ -139,10 +140,20 @@ async function joinGameWithCode(game, gameId) {
           modal.classList.add("hidden");
           overlay.classList.add("hidden");
 
+          // Save the game code to session storage
+          gameCode = game.code;
+          sessionStorage.setItem("gameCode", gameCode);
+
         } else {
           throw new Error("Invalid response format");
         }
       } else {
+         // Save the game code to session storage
+         gameCode = game.code;
+         sessionStorage.setItem("gameCode", gameCode);
+         modal.classList.add("hidden");
+         overlay.classList.add("hidden");
+         console.log(gameCode)
         throw new Error("Failed to join the game");
       }
     } catch (error) {
@@ -151,16 +162,18 @@ async function joinGameWithCode(game, gameId) {
     }
   }
 }
-
-// Function to join a game using the game code in the endpoint URL
-async function updateScore(game) {
+// Function to update the score
+async function updateScore() {
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
 
   if (accessToken) {
     try {
+      // Retrieve the game code from session storage
+      const gameCode = sessionStorage.getItem("gameCode");
+      console.log(gameCode);
       const response = await fetch(
-        `${window.env.API_URL}/game/score/${game.code}`,
+        `${window.env.API_URL}/game/score/${gameCode}`,
         {
           method: "PUT",
           headers: {
@@ -192,6 +205,7 @@ async function updateScore(game) {
     }
   }
 }
+
 
 // Function to get for available games
 async function getAvailableGames() {
@@ -277,11 +291,13 @@ async function createGame() {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify({}),
+        
       });
       if (!response.ok) {
         throw new Error("Failed to create game");
       }
       // Handle success
+      console.log("Response:", response);
       console.log("Created game successfully");
       location.reload();
     } catch (error) {
@@ -506,7 +522,7 @@ function displaySlider(images) {
 
 
     // Modify the score increment code in the img click event listener
-    img.addEventListener("click", (event) => {
+    img.addEventListener("click", async (event) => {
       // Check if the clicked element is an image
       if (event.target.tagName === "IMG") {
         // Get the clicked image's alt attribute
@@ -521,6 +537,11 @@ function displaySlider(images) {
 
           player1Score++;
           scoreText.textContent = `Score: ${player1Score}`;
+          try {
+            await updateScore();
+          } catch (error) {
+            console.error("Error updating score:", error);
+          }
           // Call the function to handle score update
           img.removeEventListener("click", this);
           SliderContainer.classList.add("hidden");
