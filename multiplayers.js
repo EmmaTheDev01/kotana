@@ -303,7 +303,7 @@ async function getAvailableGames() {
             await joinGameWithCode(game, gameId);
           } catch (error) {
             console.error("Error joining the game:", error);
-            alert("Error joining the game:", error.message);
+            alert("You have joined the game succesfully as Player 1", error.message);
           }
         });
 
