@@ -32,6 +32,7 @@ var swiper = new Swiper(".slide-content", {
   },
   initialSlide: 2, // Set the index of the card you want to be initially visible
 });
+
 let startingSeconds = 60;
 const level_one = 60;
 const level_two = 45;
@@ -224,7 +225,32 @@ async function updateScore() {
   }
 }
 
-
+//Function to delete the game
+async function deleteGame(){
+  const accessToken =
+    getCookie("accessToken") || localStorage.getItem("accessToken");
+    const gameCode = sessionStorage.getItem("gameCode");
+ if(accessToken){
+   try{
+     const response = await fetch(window.env.API_URL + `/game/delete/${gameCode}`, {
+       method: "DELETE",
+       headers: {
+         "Content-Type": "application/json",
+         Authorization: `Bearer ${accessToken}`,
+       },
+       body: JSON.stringify({}),
+     });
+     if (!response.ok) {
+       throw new Error("Failed to delete game");
+     }
+     // Handle success
+     console.log("Game deleted successfully");
+     location.reload();
+   }catch(error){
+     console.error("Error deleting game:", error);
+   }
+ }
+}
 // Function to get for available games
 async function getAvailableGames() {
   const accessToken =

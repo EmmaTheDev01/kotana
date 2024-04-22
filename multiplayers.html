@@ -33,7 +33,6 @@
         <a href="play.html">
           <li class="menu-item" id="multiplayer">Single player</li>
         </a>
-        <li class="menu-item" id="top_score">Top score</li>
         <li class="menu-item" id="logout">Logout</li>
       </ul>
     </div>
@@ -155,31 +154,14 @@
 
       async function logout() {
         try {
+          await deleteGame();
           const accessToken = localStorage.getItem('accessToken');
           if (accessToken) {
-            const response = await fetch(window.env.API_URL + '/online/reset', {
-              method: 'PUT',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-              },
-              body: JSON.stringify({ online: false }),
-            });
-
-            if (response.ok) {
-              const data = await response.json();
               localStorage.removeItem('accessToken');
               document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-              window.location.href = 'index.html';
-            } else {
-              throw new Error('Failed to update online status');
-            }
-          } else {
-            localStorage.removeItem('accessToken');
-            document.cookie = 'accessToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-            window.location.href = 'index.html';
-          }
-        } catch (error) {
+              window.location.href = 'index.html';     
+        }
+       } catch (error) {
           console.error('Fetch error:', error);
           window.location.href = 'index.html';
           localStorage.removeItem('accessToken');
