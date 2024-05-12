@@ -198,19 +198,43 @@ async function updateScore() {
           player2Score = player2ScoreNum;
           playeTwo_score.textContent = player2Score;
           sessionStorage.setItem("player2Score", player2ScoreNum);
-          scoreText.textContent = `${player1ScoreNum}`;
+          scoreText.textContent = `🥇 ${player1ScoreNum}`;
           scoreText = sessionStorage.setItem("player1Score", player1ScoreNum);
           shuffleButton.style.display = "block";
           SliderContainer.style.display = "block";
-
+          //Determining who won the level
+          if (player1ScoreNum = 20 && player1ScoreNum > player2Score) {
+            alert("Player 1 won level 1")
+          }
+          else if (player2Score = 20 && player2Score > player1ScoreNum) {
+            alert("Player 2 won level 1");
+          }
+          else if (player1ScoreNum = 30 && player1ScoreNum > player2Score) {
+            alert("Player 1 won level 2")
+          }
+          else if (player2Score = 30 && player2Score > player1ScoreNum) {
+            alert("Player 1 won level 2")
+          }
+          else if (player1ScoreNum = 40 && player1ScoreNum > player2Score) {
+            alert("Player 1 won level 3")
+          }
+          else if (player2Score = 40 && player2Score > player1ScoreNum) {
+            alert("Player 1 won level 3")
+          }
+          else if (player2Score = 45 && player2Score > player1ScoreNum) {
+            alert("Player 1 won level 4")
+          }
+          else if (player1ScoreNum = 45 && player1ScoreNum > player2Score) {
+            alert("Player 1 won level 4")
+          }
+          // Handle success
+          console.log("Score updated successfully");
           if (player2ScoreNum >= 50) {
             alert("Player 2 has won the game");
           }
           else if (player1ScoreNum >= 50) {
             alert("Player 1 has won the game");
           }
-          // Handle success
-          console.log("Score updated successfully");
         } else {
           throw new Error("Invalid response format");
         }
@@ -226,30 +250,30 @@ async function updateScore() {
 }
 
 //Function to delete the game
-async function deleteGame(){
+async function deleteGame() {
   const accessToken =
     getCookie("accessToken") || localStorage.getItem("accessToken");
-    const gameCode = sessionStorage.getItem("gameCode");
- if(accessToken){
-   try{
-     const response = await fetch(window.env.API_URL + `/game/delete/${gameCode}`, {
-       method: "DELETE",
-       headers: {
-         "Content-Type": "application/json",
-         Authorization: `Bearer ${accessToken}`,
-       },
-       body: JSON.stringify({}),
-     });
-     if (!response.ok) {
-       throw new Error("Failed to delete game");
-     }
-     // Handle success
-     console.log("Game deleted successfully");
-     location.reload();
-   }catch(error){
-     console.error("Error deleting game:", error);
-   }
- }
+  const gameCode = sessionStorage.getItem("gameCode");
+  if (accessToken) {
+    try {
+      const response = await fetch(window.env.API_URL + `/game/delete/${gameCode}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({}),
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete game");
+      }
+      // Handle success
+      console.log("Game deleted successfully");
+      location.reload();
+    } catch (error) {
+      console.error("Error deleting game:", error);
+    }
+  }
 }
 // Function to get for available games
 async function getAvailableGames() {
@@ -302,8 +326,8 @@ async function getAvailableGames() {
             // Call the function to join the game using the game code in the URL
             await joinGameWithCode(game, gameId);
           } catch (error) {
-            console.error("Error joining the game:", error);
-            alert("You have joined the game succesfully as Player 1", error.message);
+            console.error("Error joining the game, you are already in the game!: ", error);
+            alert("You have joined the game succesfully as Player 1");
           }
         });
 
@@ -361,7 +385,7 @@ function changeCountDown() {
   let seconds = time % 60;
   seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  timer.innerHTML = `${minutes < 10 ? "0" + minutes : minutes} : ${seconds}`;
+  timer.innerHTML = `⏱️${minutes < 10 ? "0" + minutes : minutes} : ${seconds}`;
 
   if (time === 0) {
     setTimerStyle("red", "00", "00");
@@ -383,7 +407,7 @@ function changeCountDown() {
 
 function setTimerStyle(color, minutes = "", seconds = "") {
   timer.style.color = color;
-  timer.innerHTML = `${minutes} : ${seconds}`;
+  timer.innerHTML = `⏱️${minutes} : ${seconds}`;
 }
 //Setting the default card to the correct image.
 
@@ -406,33 +430,14 @@ function setDefaultCard(cardData) {
   stopCountDown();
   shuffleButton.style.display = "block";
 }
-// Event listener for the shuffle button
-shuffleButton.addEventListener("click", () => {
-  menu.classList.add("hidden");
-  announcers.classList.add("hidden");
-  SliderContainer.style.display = "block";
-  setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
-  time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
-  stopCountDown(); // Stop the countdown if it's already running
-  success.classList.add("hidden");
-  fail.classList.add("hidden");
-  // Reduce the height of the default card
-  defaultCard.style.width = "100px";
-  defaultCard.setAttribute("src", "/cards/1.png");
-  defaultCard.classList.add("shaking-image");
-  SliderContainer.classList.remove("hidden");
-
-  // Fetch data from JSON file
-  fetchDataAndDisplay();
-});
 // Function to fetch data from JSON file and display
-async function fetchDataAndDisplay() {
+async function fetchDataAndDisplay(jsonFileName) {
   try {
     const loadingSpinner = document.querySelector(".loading-spinner");
     loadingSpinner.style.display = "block";
     loadingSpinner.style.zIndex = "2";
 
-    const response = await fetch("data.json");
+    const response = await fetch(jsonFileName);
     console.log("Response status:", response.status);
 
     const data = await response.json();
@@ -449,6 +454,61 @@ async function fetchDataAndDisplay() {
     console.error("Error fetching data:", error);
   }
 }
+
+let currentLanguage = "default"; // Variable to keep track of the current language
+
+// Function to fetch data from JSON file based on language selection
+async function fetchData(language) {
+  try {
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.style.display = "block";
+
+    let jsonFile;
+    if (language === "kinyarwanda") {
+      jsonFile = "kinya.json"; // Assuming the Kinyarwanda JSON file is named kinya.json
+    } else {
+      jsonFile = "data.json"; // Assuming the default JSON file is named data.json
+    }
+
+    await fetchDataAndDisplay(jsonFile);
+    currentLanguage = language; // Update the current language
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+// Then call fetchDataAndDisplay() with the appropriate JSON file name when needed, for example:
+// Inside changeLanguage() function:
+function changeLanguage() {
+  fetchData("kinyarwanda");
+}
+
+// Update the fetchDataAndDisplay function call inside the shuffleButton click event listener:
+shuffleButton.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  announcers.classList.add("hidden");
+  SliderContainer.style.display = "block";
+  setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
+  time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
+  stopCountDown(); // Stop the countdown if it's already running
+  success.classList.add("hidden");
+  fail.classList.add("hidden");
+  // Reduce the height of the default card
+  defaultCard.style.width = "100px";
+  defaultCard.setAttribute("src", "/cards/1.png");
+  defaultCard.classList.add("shaking-image");
+  SliderContainer.classList.remove("hidden");
+
+  // Fetch data from JSON file based on language selection
+  fetchData(currentLanguage);
+});
+
+// Function to handle click event on the kinyarwanda div
+const kinyarwandaDiv = document.querySelector(".kinyarwanda");
+kinyarwandaDiv.addEventListener("click", () => {
+  fetchData("kinyarwanda");
+});
 
 // Function to shuffle array items randomly
 function shuffleArray(array) {

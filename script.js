@@ -147,33 +147,14 @@ function setDefaultCard(cardData) {
   stopCountDown();
   shuffleButton.style.display = "block";
 }
-// Event listener for the shuffle button
-shuffleButton.addEventListener("click", () => {
-  announcers.classList.add('hidden');
-  SliderContainer.style.display = "block";
-  setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
-  time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
-  stopCountDown(); // Stop the countdown if it's already running
-  success.classList.add('hidden');
-  fail.classList.add('hidden')
-  // Reduce the height of the default card
-  defaultCard.style.width = "100px";
-  defaultCard.setAttribute('src', "/cards/1.png")
-  defaultCard.classList.add("shaking-image");
-  SliderContainer.classList.remove("hidden");
-
-  // Fetch data from JSON file
-  fetchDataAndDisplay();
-});
-
-
 // Function to fetch data from JSON file and display
-async function fetchDataAndDisplay() {
+async function fetchDataAndDisplay(jsonFileName) {
   try {
-    const loadingSpinner = document.querySelector('.loading-spinner');
-    loadingSpinner.style.display = 'block';
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.style.display = "block";
+    loadingSpinner.style.zIndex = "2";
 
-    const response = await fetch("data.json");
+    const response = await fetch(jsonFileName);
     console.log("Response status:", response.status);
 
     const data = await response.json();
@@ -185,11 +166,66 @@ async function fetchDataAndDisplay() {
     // Display the first card in the UI
     displayCard(data.cards[0], data.cards);
     // Hide the loading spinner after fetching data
-    loadingSpinner.style.display = 'none';
+    loadingSpinner.style.display = "none";
   } catch (error) {
     console.error("Error fetching data:", error);
   }
 }
+
+let currentLanguage = "default"; // Variable to keep track of the current language
+
+// Function to fetch data from JSON file based on language selection
+async function fetchData(language) {
+  try {
+    const loadingSpinner = document.querySelector(".loading-spinner");
+    loadingSpinner.style.display = "block";
+
+    let jsonFile;
+    if (language === "kinyarwanda") {
+      jsonFile = "kinya.json"; // Assuming the Kinyarwanda JSON file is named kinya.json
+    } else {
+      jsonFile = "data.json"; // Assuming the default JSON file is named data.json
+    }
+
+    await fetchDataAndDisplay(jsonFile);
+    currentLanguage = language; // Update the current language
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+}
+
+
+// Then call fetchDataAndDisplay() with the appropriate JSON file name when needed, for example:
+// Inside changeLanguage() function:
+function changeLanguage() {
+  fetchData("kinyarwanda");
+}
+
+// Update the fetchDataAndDisplay function call inside the shuffleButton click event listener:
+shuffleButton.addEventListener("click", () => {
+  menu.classList.add("hidden");
+  announcers.classList.add("hidden");
+  SliderContainer.style.display = "block";
+  setTimerStyle("rgb(121, 236, 121)", "00", "00"); // Reset style to default
+  time = localStorage.getItem("savedTime") || startingSeconds; // Retrieve saved time or use the starting value
+  stopCountDown(); // Stop the countdown if it's already running
+  success.classList.add("hidden");
+  fail.classList.add("hidden");
+  // Reduce the height of the default card
+  defaultCard.style.width = "100px";
+  defaultCard.setAttribute("src", "/cards/1.png");
+  defaultCard.classList.add("shaking-image");
+  SliderContainer.classList.remove("hidden");
+
+  // Fetch data from JSON file based on language selection
+  fetchData(currentLanguage);
+});
+
+// Function to handle click event on the kinyarwanda div
+const kinyarwandaDiv = document.querySelector(".kinyarwanda");
+kinyarwandaDiv.addEventListener("click", () => {
+  fetchData("kinyarwanda");
+});
 
 // Function to shuffle array items randomly
 function shuffleArray(array) {

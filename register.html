@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <div class="overlay"></div>
     <div id="loading" class="loading"></div>
     <div class="register">
         <div class="logo-box">
@@ -22,9 +23,8 @@
                 <input type="email" name="email" id="email" placeholder="Enter your email address" required />
                 <span id="emailError" style="color: red; display: none;">Please enter a valid email address</span>
                 <input type="password" name="password" id="password" placeholder="Enter your password" required />
-                <span id="passwordError" style="color: red; display: none;">Password must be at least 8 characters long
-                    and contain at least one uppercase letter, one lowercase letter, one number, and one special
-                    character</span>
+                <!-- <span id="passwordError" style="color: red; display: none;">Password must be at least 6 characters
+                    long.</span> -->
                 <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password"
                     required />
                 <div class="check">
@@ -66,15 +66,10 @@
                 document.getElementById("emailError").style.display = "none";
             }
 
-            // Validate password strength
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            if (!passwordRegex.test(password)) {
-                document.getElementById("passwordError").style.display = "block";
+            // Validate password length
+            if (password.length < 6) {
                 return;
-            } else {
-                document.getElementById("passwordError").style.display = "none";
             }
-
             // Compare passwords
             if (password !== confirm_password) {
                 alert("Passwords do not match");
@@ -92,7 +87,6 @@
                     lastname,
                     email,
                     password,
-
                 })
             })
                 .then(response => response.json())
@@ -110,6 +104,7 @@
                     alert("Registration failed");
                 });
         });
+
     </script>
 </body>
 
